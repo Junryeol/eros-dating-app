@@ -1,0 +1,22 @@
+{
+  "app_title": "에로스",
+  "hello_world": "에로스에서\n당신의 사랑을 찾아보세요",
+  "sign_in": "로그인",
+  "sign_out": "로그아웃",
+  "sign_up": "회원가입",
+  "email": "이메일",
+  "password": "비밀번호",
+  "phone": "핸드폰",
+  "next": "다음",
+  "confirm": "확인",
+  "cancel": "최소",
+  "password_reset": "비밀번호 초기화",
+  "confirm_duplication": "중복확인",
+  "not_match": "일치하지 않음",
+  "weak_password": "약한 비밀번호",
+  "wrong_email_password": "이메일 또는 비밀번호 틀림",
+  "required_input": "필수 입력 항목",
+  "wrong_input_format": "입력 형식 불일치",
+  "registered_email": "등록된 이메일",
+  "system_error": "시스템 에러"
+}
