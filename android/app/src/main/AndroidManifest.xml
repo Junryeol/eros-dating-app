@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_app">
    <application
-        android:label="flutter_app"
-        android:icon="@mipmap/launcher_icon">
+        android:label="에로스"
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
