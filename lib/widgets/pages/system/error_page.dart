@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPage extends StatefulWidget {
   ErrorPage({Key key}) : super(key: key);
@@ -14,7 +14,7 @@ class _ErrorPageState extends State<ErrorPage> {
 
     return Scaffold(
       body: Center(
-        child: Text(AppLocalizations.of(context).system_error),
+        child: Text(tr("system_error")),
       ),
     );
   }

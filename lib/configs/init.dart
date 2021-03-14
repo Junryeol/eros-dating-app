@@ -18,9 +18,14 @@ class Init {
 
   static Widget page(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     if (snapshot.connectionState == ConnectionState.done) {
+      return RoutePath.routes(context)['/index'](context);
       if (globals.health) {
         if (globals.prefs.get("session") != null) {
-          return RoutePath.routes(context)['/home'](context);
+          if (globals.prefs.get("terms") != null) {
+            return RoutePath.routes(context)['/home'](context);
+          } else {
+            return RoutePath.routes(context)['/terms'](context);
+          }
         } else {
           return RoutePath.routes(context)['/intro'](context);
         }

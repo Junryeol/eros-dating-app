@@ -17,6 +17,21 @@
   "wrong_email_password": "이메일 또는 비밀번호 틀림",
   "required_input": "필수 입력 항목",
   "wrong_input_format": "입력 형식 불일치",
-  "registered_email": "등록된 이메일",
-  "system_error": "시스템 에러"
+  "registered": "다른 사용자가 사용하고 있습니다",
+  "system_error": "시스템 에러",
+  "profile_registration": "프로필 등록",
+  "gender": "성별",
+  "nick_name": "닉네임",
+  "job": "직업",
+  "date_of_birth": "생년월일",
+  "height": "키",
+  "body": "체형",
+  "residence": "거주지",
+  "religion": "종교",
+  "drinking": "음주",
+  "smoking": "흡연",
+  "male": "남자",
+  "female": "여자",
+  "add": "추가",
+  "tag": "태그"
 }

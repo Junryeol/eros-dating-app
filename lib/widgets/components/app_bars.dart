@@ -13,4 +13,16 @@ class AppBars {
       actions: actions,
     );
   }
+
+  static popup({BuildContext context, String title}){
+    return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.close, color: Colors.black),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      centerTitle: true,
+      title: Text(title, style: TextStyle(color: Color(0xff706569), fontSize: 14.0),),
+      backgroundColor: Colors.white,
+    );
+  }
 }

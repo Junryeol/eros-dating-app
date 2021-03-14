@@ -1,68 +1,69 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 
+import 'package:crypto/crypto.dart';
+
 import 'package:eros/utils/rest.dart';
-import 'package:eros/models/user.dart';
 
 class Auth with ChangeNotifier {
-  User user;
+  Map<String, dynamic> user;
   Rest _rest;
 
   Auth() {
-    user = User();
+    user = {};
     _rest = Rest();
   }
 
-  Future<User> me() async {
-    var data = await _rest.get(
+  Future<Map<String, dynamic>> me() async {
+    var res = await _rest.get(
         path: "/users/me"
     );
-    log("me: "+data.toString());
-    if (data['code'] == 209){
-      user = User();
+    log("me: "+res.toString());
+    if (res['code'] == 209){
+      user = {};
     } else {
-      user.email = data['email'];
-      user.phone = data['phone'];
-      user.objectId = data['objectId'];
+      user = res;
     }
     return user;
   }
 
-  Future<User> signin(email, password) async {
-    var data = await _rest.get(
+  Future<Map<String, dynamic>> signin({String email, String password}) async {
+    var digest = sha256.convert(utf8.encode(password)).toString();
+
+    var res = await _rest.get(
       path: "/login",
       params: {
-        "username": email,
-        "password": password,
+        "email": email,
+        "password": digest,
       }
     );
-    log("signin: "+data.toString());
+    log("signin: "+res.toString());
     log("user: "+user.toString());
 
-    if (!data.containsKey('error')){
-      user.email = data['email'];
-      user.phone = data['phone'];
-      user.objectId = data['objectId'];
+    if (!res.containsKey('error')){
+      user = res;
       notifyListeners();
     }
 
     return user;
   }
 
-  Future<User> signup(email, password, phone) async {
-    var data = await _rest.post(
-      path:  "/users",
-      data: {
-        "username": email,
-        "password": password,
-        "email": email,
-        "phone": phone,
-      },
-    );
-    log("signup: "+data.toString());
+  Future<Map<String, dynamic>> signup({String email, String password, String username, Map<String, String> data}) async {
+    var digest = sha256.convert(utf8.encode(password)).toString();
 
-    if (!data.containsKey('error')){
+    data["email"] = email;
+    data["password"] = digest;
+    data["username"] = username;
+
+    var res = await _rest.post(
+      path:  "/users",
+      data: data,
+    );
+    log("signup: "+res.toString());
+
+    if (!res.containsKey('error')){
       await me();
       notifyListeners();
     }
@@ -70,15 +71,28 @@ class Auth with ChangeNotifier {
     return user;
   }
 
-  Future<User> signout({BuildContext context}) async {
-    var data = await _rest.post(
+  Future<Map<String, dynamic>> signout({BuildContext context}) async {
+    var res = await _rest.post(
       path:  "/logout",
     );
     _rest.removeSession();
-    user = User();
-    log("signout: "+data.toString());
+    user = {};
+    log("signout: "+res.toString());
 
-    Navigator.pushNamed(context, '/init');
+    Navigator.pushNamed(context, '/intro');
     return user;
   }
+
+  Future<Map<String, dynamic>> update({BuildContext context}) async {
+    var res = await _rest.post(
+      path:  "/logout",
+    );
+    _rest.removeSession();
+    user = {};
+    log("signout: "+res.toString());
+
+    Navigator.pushNamed(context, '/intro');
+    return user;
+  }
+
 }

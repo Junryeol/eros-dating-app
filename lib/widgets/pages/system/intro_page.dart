@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/texts.dart';
@@ -15,7 +16,6 @@ class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffolds.basic(
-      rowRate: [3, 14, 3],
       body: Stack(
           children: <Widget>[
             Column(
@@ -23,14 +23,10 @@ class _IntroPageState extends State<IntroPage> {
               children: <Widget>[
                 Image.asset("assets/images/intro.png"),
                 SizedBox(height: 12),
-                Texts.fitWidth(text: AppLocalizations
-                    .of(context)
-                    .hello_world, textAlign: TextAlign.left),
+                Texts.fitWidth(text: tr("hello_world"), textAlign: TextAlign.left),
                 SizedBox(height: 12),
                 Buttons.primary(
-                  text: AppLocalizations
-                      .of(context)
-                      .sign_up,
+                  text: tr("sign_up"),
                   onPressed: () {
                     Navigator.pushNamed(context, '/sign_up');
                   },
@@ -44,9 +40,7 @@ class _IntroPageState extends State<IntroPage> {
                 Container(
                   width: double.infinity,
                   child: Buttons.transparency(
-                    text: AppLocalizations
-                        .of(context)
-                        .sign_in,
+                    text: tr("sign_in"),
                     onPressed: () {
                       Navigator.pushNamed(context, '/sign_in');
                     },

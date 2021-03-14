@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'labels.dart';
+
 class TextFormFields {
   static basic(
       {BuildContext context,
@@ -20,16 +22,9 @@ class TextFormFields {
         key: key,
         child: Column(
         children: <Widget>[
-          SizedBox(height: 12),
-          Container(
-            height: 14,
-            width: double.infinity,
-            child: Text(labelText,
-                style: const TextStyle(
-                    color:  const Color(0xff706569),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0),
-                textAlign: TextAlign.left),
+          Labels.basic(
+              context: context,
+              labelText: labelText
           ),
           TextFormField(
             cursorColor: Color(0xff3a3a3f),

@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:image_crop/image_crop.dart';
 
@@ -24,8 +24,7 @@ class _ImageCropPageState extends State<ImageCropPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffolds.basic(
-      rowRate: [3, 14, 3],
+    return Scaffold(
       body: Stack(
           children: <Widget>[
             Container(
@@ -39,9 +38,7 @@ class _ImageCropPageState extends State<ImageCropPage> {
                 Container(
                   width: double.infinity,
                   child: Buttons.transparency(
-                    text: AppLocalizations
-                        .of(context)
-                        .sign_in,
+                    text:tr("sign_in"),
                     onPressed: () {
                       Navigator.pushNamed(context, '/sign_in');
                     },
