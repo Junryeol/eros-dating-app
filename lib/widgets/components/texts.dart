@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 
 class Texts {
-  static fitWidth({BuildContext context, String text, TextAlign textAlign}){
+  static fitWidth({BuildContext context, String text, TextAlign textAlign, double width = double.infinity, double fontSize = 14.0, FontWeight fontWeight = FontWeight.w500}){
     return Container(
-      width: double.infinity,
+      width: width,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: Text(text,
-            style: const TextStyle(
-                color: const Color(0xff706569)),
+            style: TextStyle(
+                fontSize:fontSize,
+                fontWeight:fontWeight,
+                color: Color(0xff706569)),
             textAlign: textAlign),
       ),
     );
   }
 
   static basic(
-      {BuildContext context, String text, TextAlign textAlign}){
+      {BuildContext context, String text, TextAlign textAlign, double height = 20.0, double width = double.infinity, double fontSize = 14.0, FontWeight fontWeight = FontWeight.w500}){
     return Container(
-      height: 20,
-      width: double.infinity,
+      height: height,
+      width: width,
       child: Text(text,
-            style: const TextStyle(
-                color:  const Color(0xff706569),
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
+            style: TextStyle(
+                color:  Color(0xff706569),
+                fontWeight: fontWeight,
+                fontSize: fontSize,
             ),
             textAlign: textAlign),
     );

@@ -11,7 +11,7 @@ class Rest {
   final String _PARSE_APP_ID = 'APPLICATION_ID';
 
   // ignore: non_constant_identifier_names
-  final String _PARSE_APP_URL = 'https://192.168.0.6/parse';
+  final String _PARSE_APP_URL = 'https://localhost/api/parse';
   // final String _PARSE_APP_URL = 'http://192.168.0.6:1337/parse';
 
   IOClient _http;
