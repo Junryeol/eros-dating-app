@@ -1,0 +1,7 @@
+in: query
+name: limit
+description: 리스트 갯수
+required: false
+schema:
+  type: integer
+  format: int32

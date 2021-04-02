@@ -1,0 +1,7 @@
+in: path
+name: fileId
+description: 파일 아이디
+required: true
+schema:
+  type: string
+

@@ -1,0 +1,6 @@
+File:
+  $ref: "./file.yaml"
+Error:
+  $ref: "./error.yaml"
+Success:
+  $ref: "./success.yaml"

@@ -1,0 +1,13 @@
+get:
+  summary: 본인 정보 조회
+  description: Access 토큰으로 본인 정보 조회
+  tags:
+    - account
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/user.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

@@ -44,3 +44,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+apidoc/node_modules
+apidoc/package-lock.json
+apidoc/swagger.yaml
+apidoc/index.html

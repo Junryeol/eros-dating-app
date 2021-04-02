@@ -1,0 +1,7 @@
+
+content:
+  application/octet-stream:
+    schema:
+      type: string
+      example: image
+      format: binary
