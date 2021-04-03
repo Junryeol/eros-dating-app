@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +15,8 @@ class Init {
     loadResource();
     // TODO: 디바이스 네트워크 체크 추가 필요
     var rest = Rest();
-    globals.health = await rest.health();
+    // globals.health = await rest.health();
+    log("after init");
   }
 
   static Widget page(BuildContext context, AsyncSnapshot<dynamic> snapshot) {

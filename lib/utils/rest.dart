@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
 
@@ -11,7 +12,7 @@ class Rest {
   final String _PARSE_APP_ID = 'APPLICATION_ID';
 
   // ignore: non_constant_identifier_names
-  final String _PARSE_APP_URL = 'https://192.168.0.6/parse';
+  final String _PARSE_APP_URL = 'https://192.168.0.193:1337/parse';
   // final String _PARSE_APP_URL = 'http://192.168.0.6:1337/parse';
 
   IOClient _http;
@@ -64,7 +65,7 @@ class Rest {
       _PARSE_APP_URL + "/health",
       headers: _header(),
     );
-    print(response.statusCode);
+    log(response.statusCode.toString());
     if (response.statusCode < 300 && _json2object(response)['status'] == "ok"){
       return true;
     }

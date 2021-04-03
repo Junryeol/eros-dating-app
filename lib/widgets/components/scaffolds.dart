@@ -7,6 +7,7 @@ class Scaffolds {
       appBar: appBar,
       bottomNavigationBar: bottomNavigationBar,
       body: body,
+      resizeToAvoidBottomInset: false,
     );
   }
   static scroll({BuildContext context, Key key, PreferredSizeWidget appBar, Widget body, Widget bottomNavigationBar}){
