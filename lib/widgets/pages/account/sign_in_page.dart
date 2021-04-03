@@ -30,6 +30,9 @@ class _SignInPageState extends State<SignInPage> {
   bool _isPasswordEmpty = true;
   bool _passwordVisibility = false;
 
+  Color _emailPrefixColor = null;
+  Color _passwordPrefixColor = null;
+
   @override
   void initState() {
     super.initState();
@@ -69,8 +72,35 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   // 임시로 회원가입 때와 동일하게
-  String _emailValidator(String value) => Valid.email(text: value.trim()) ? null : tr("email_none");
-  String _passwordValidator(String value) => Valid.password(text: value.trim()) ? null : tr("password_none");
+  String _emailValidator(String value) {
+    if (Valid.email(text: value.trim())) {
+      setState(() {
+        _emailPrefixColor = null;
+      });
+      return null;
+    }
+    else {
+      setState(() {
+        _emailPrefixColor = Color(0xfff2708f);
+      });
+      return tr("email_none");
+    }
+  }
+
+  String _passwordValidator(String value) {
+    if (Valid.password(text: value.trim())) {
+      setState(() {
+        _passwordPrefixColor = null;
+      });
+      return null;
+    }
+    else {
+      setState(() {
+        _passwordPrefixColor = Color(0xfff2708f);
+      });
+      return tr("password_none");
+    }
+  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -130,7 +160,7 @@ class _SignInPageState extends State<SignInPage> {
               controller: emailController,
               labelText: tr('email'),
               hintText: tr('email_hint'),
-              prefixIcon: Icon(Icons.person_outline),
+              prefixIcon: Icon(Icons.person_outline, color: _emailPrefixColor,),
               keyboardType: TextInputType.emailAddress,
               focusNode: focusEmail,
               validator: _emailValidator,
@@ -142,7 +172,7 @@ class _SignInPageState extends State<SignInPage> {
               controller: passwordController,
               labelText: tr('password'),
               hintText: tr('password_hint'),
-              prefixIcon: Icon(Icons.lock),
+              prefixIcon: Icon(Icons.lock, color: _passwordPrefixColor,),
               suffixIcon: IconButton(
                 icon: Icon(_passwordVisibility ? Icons.visibility_off : Icons.visibility),
                 onPressed: _togglePasswordVisibility,
