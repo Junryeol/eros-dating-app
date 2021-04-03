@@ -15,7 +15,10 @@ class _FindEmailPageState extends State<FindEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffolds.basic(
-      appBar: AppBars.basic(title: tr("email_find")),
+      appBar: AppBars.basic(
+        context: context,
+        title: tr("email_find"),
+      ),
     );
   }
 }

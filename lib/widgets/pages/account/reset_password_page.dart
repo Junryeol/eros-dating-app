@@ -14,7 +14,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffolds.basic(
-      appBar: AppBars.basic(title: tr("password_find")),
+      appBar: AppBars.basic(
+        context: context,
+        title: tr("password_find"),
+      ),
     );
   }
 }
