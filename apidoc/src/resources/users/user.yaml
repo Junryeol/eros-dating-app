@@ -1,0 +1,44 @@
+get:
+  summary: 사용자 조회
+  description: 프로필 조회랑 다름
+  tags:
+    - users
+  parameters:
+    - $ref: "../../parameters/path/userId.yaml"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/user.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
+patch:
+  summary: 사용자 정보 수정
+  description: 특정 값만 전달 가능 (닉네임(name) 중복체크 기능 포함, active는 정지, 휴면, 비승인 계정 (비)활성화시 사용, email과 auth은 관리자 외에는 변경 불가능하도록 설정)
+  tags:
+    - users
+  parameters:
+    - $ref: "../../parameters/path/userId.yaml"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/users/user.yaml"
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
+delete:
+  summary: 사용자 삭제
+  description: 재가입 기간은 알아서
+  tags:
+    - users
+  parameters:
+    - $ref: "../../parameters/path/userId.yaml"
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

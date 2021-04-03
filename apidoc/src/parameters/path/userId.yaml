@@ -1,0 +1,7 @@
+in: path
+name: userId
+description: 사용자 아이디
+required: true
+schema:
+  type: string
+

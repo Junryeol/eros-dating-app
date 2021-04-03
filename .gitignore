@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+server/nginx
+server/mongodb
+
+apidoc/node_modules
+apidoc/package-lock.json
+apidoc/swagger.yaml
+apidoc/index.html

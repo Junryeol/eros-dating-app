@@ -1,0 +1,18 @@
+post:
+  summary: 사용자 로그인
+  description: 사용자 이메일와 비밀번호 보내서 토큰 발급
+  tags:
+    - account
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/account/login.yaml"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/account/token.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

@@ -16,7 +16,9 @@ class TextFormFields {
       Function validator,
       Function onChanged,
       Key key,
-      TextInputType keyboardType}) {
+      TextInputType keyboardType
+        , double height = 14.0, double width = double.infinity, double fontSize = 14.0, FontWeight fontWeight = FontWeight.w500
+      }) {
 
     return Form(
         key: key,
@@ -24,7 +26,11 @@ class TextFormFields {
         children: <Widget>[
           Labels.basic(
               context: context,
-              labelText: labelText
+              labelText: labelText,
+            height: height,
+            width: width,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
           ),
           TextFormField(
             cursorColor: Color(0xff3a3a3f),
@@ -42,7 +48,6 @@ class TextFormFields {
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,
           ),
-          SizedBox(height: 12),
         ]
       ),
     );
