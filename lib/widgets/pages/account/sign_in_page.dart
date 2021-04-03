@@ -30,8 +30,8 @@ class _SignInPageState extends State<SignInPage> {
   bool _isPasswordEmpty = true;
   bool _passwordVisibility = false;
 
-  Color _emailPrefixColor = null;
-  Color _passwordPrefixColor = null;
+  Color _emailPrefixColor;
+  Color _passwordPrefixColor;
 
   @override
   void initState() {
