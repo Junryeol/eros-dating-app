@@ -6,14 +6,14 @@ import 'package:provider/provider.dart';
 
 import 'package:eros/providers/auth.dart';
 
-class TermsPage extends StatefulWidget {
-  TermsPage({Key key}) : super(key: key);
+class TermsDetailPage extends StatefulWidget {
+  TermsDetailPage({Key key}) : super(key: key);
 
   @override
-  _TermsPageState createState() => _TermsPageState();
+  _TermsDetailPageState createState() => _TermsDetailPageState();
 }
 
-class _TermsPageState extends State<TermsPage> {
+class _TermsDetailPageState extends State<TermsDetailPage> {
   Auth _auth;
 
   List<bool> check = [false,false,false,false]; // 데이터 보낼때 약관동의 날짜도 포함해야함
