@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/checkboxs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
+import 'package:eros/widgets/pages/account/terms_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,51 +22,15 @@ class TermsAgreementPage extends StatefulWidget {
 }
 
 class _TermsAgreementPageState extends State<TermsAgreementPage> {
-  Auth _auth;
-
-  List<bool> check = [false,false,false,false]; // 데이터 보낼때 약관동의 날짜도 포함해야함
-
-  Widget _renderAgreementRow({ @required bool checkValue, @required Function onChange, bool isRequired = true, String text = "약관 동의" }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "["+ (isRequired ? tr("required") : tr("option"))+"]",
-          style: TextStyle(
-            color: Color(0xfff2708f),
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.28
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(left: 3),
-            child: Texts.basic(
-              context: context,
-              height: 18,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              text: text
-            )
-          )
-        ),
-        CircularCheckBox(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          activeColor: Color(0xfff2708f),
-          value: checkValue,
-          onChanged: (value) {
-            onChange(value);
-          }
-        )
-      ]
-    );
-  }
+  List<Map<String, dynamic>> checkList = [
+    { "id": "terms_service", "check": false },
+    { "id": "terms_personal", "check": false },
+    { "id": "terms_location", "check": false },
+    { "id": "terms_marketing", "check": false },
+  ]; // 데이터 보낼때 약관동의 날짜도 포함해야함
 
   @override
   Widget build(BuildContext context) {
-    _auth = Provider.of<Auth>(context);
-
     return Container(
       padding: EdgeInsets.only(left: 32, right: 32),
       child: Column(
@@ -95,9 +62,15 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
                 CircularCheckBox(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   activeColor: Color(0xfff2708f),
-                  value: check[0],
+                  value: checkList.every((element) => element['check']),
                   onChanged: (value) {
-                    setState(() { check[0] = value; });
+                    log(value.toString());
+                    setState(() { 
+                      checkList.forEach((e) { 
+                        e['check'] = value;
+                        return e; 
+                      });
+                    });
                   }
                 )
               ]
@@ -111,47 +84,20 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
               )
             )
           ),
-          // TODO: 반복문이 너무 마렵다...
-          SizedBox(height: 12),
-          _renderAgreementRow(
-            isRequired: true,
-            text: tr("terms_service"),
-            checkValue: check[0], 
+          ...checkList.map((e) => new _TermAgreement(
+            checkValue: e['check'], 
             onChange: (value) {
-              setState(() { check[0] = value; });
-            }
-          ),
-          SizedBox(height: 12),
-          _renderAgreementRow(
+              setState(() {
+                checkList[checkList.indexOf(e)]['check'] = value;
+              });
+            },
             isRequired: true,
-            text: tr("terms_personal"),
-            checkValue: check[1], 
-            onChange: (value) {
-              setState(() { check[1] = value; });
-            }
-          ),
-          SizedBox(height: 12),
-          _renderAgreementRow(
-            isRequired: true,
-            text: tr("terms_location"),
-            checkValue: check[2], 
-            onChange: (value) {
-              setState(() { check[2] = value; });
-            }
-          ),
-          SizedBox(height: 12),
-          _renderAgreementRow(
-            isRequired: true,
-            text: tr("terms_marketing"),
-            checkValue: check[3], 
-            onChange: (value) {
-              setState(() { check[3] = value; });
-            }
-          ),
+            textId: e['id'],
+          )),
           SizedBox(height: 36),
           Buttons.primary(
             context: context,
-            active: true,
+            active: checkList.every((element) => element['check']),
             height: 64,
             text: tr("next"),
             fontSize: 20,
@@ -162,4 +108,64 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
       ),
     );
   }
+}
+
+class _TermAgreement extends StatelessWidget {
+  _TermAgreement({
+    Key key, 
+    @required this.checkValue, 
+    @required this.onChange, 
+    this.isRequired = true,
+    this.textId = "약관 동의"
+  }) : super(key: key);
+
+  final bool checkValue;
+  final Function onChange;
+  bool isRequired;
+  String textId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "["+ (isRequired ? tr("required") : tr("option"))+"]",
+            style: TextStyle(
+              color: Color(0xfff2708f),
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.28
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 3),
+              child: InkWell(
+                onTap: () => Navigator.pushNamed(context, "/terms_detail", arguments: TermsDetailArguments(textId)),
+                child: Text(
+                  tr(textId),
+                  style: TextStyle(
+                    color: checkValue ? Color(0xff706569) : Color(0xffd8d2d2),
+                    fontSize: 14,
+                  ),
+                )
+              )
+            )
+          ),
+          CircularCheckBox(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            activeColor: Color(0xfff2708f),
+            value: checkValue,
+            onChanged: (value) {
+              onChange(value);
+            }
+          )
+        ]
+      )
+    );
+  }
+
 }

@@ -1,61 +1,60 @@
+import 'dart:developer';
+
 import 'package:circular_check_box/circular_check_box.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/checkboxs.dart';
+import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:eros/providers/auth.dart';
 
-class TermsDetailPage extends StatefulWidget {
-  TermsDetailPage({Key key}) : super(key: key);
+// Navigator를 통해 arguments를 받기 위함
+class TermsDetailArguments {
+  final String apiId;
 
-  @override
-  _TermsDetailPageState createState() => _TermsDetailPageState();
+  TermsDetailArguments(this.apiId);
 }
 
-class _TermsDetailPageState extends State<TermsDetailPage> {
-  Auth _auth;
-
-  List<bool> check = [false,false,false,false]; // 데이터 보낼때 약관동의 날짜도 포함해야함
+class TermsDetailPage extends StatelessWidget {
+  // TODO: 전달받은 id로 api 호출해 html을 render
+  Future<String> downloadHtml(String id) async {
+    log("API_ID in TermsDetailPage: " + id);
+    // String API_URL = "blahblah"+id;
+    // var response =  await http.get(API_URL);    
+    return Future.value("[${id}] Data download successfully"); // return your response
+  } 
 
   @override
   Widget build(BuildContext context) {
-    _auth = Provider.of<Auth>(context);
+    final TermsDetailArguments args = ModalRoute.of(context).settings.arguments as TermsDetailArguments;
 
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              CircularCheckBox(
-                   value: check[0],
-                onChanged: (value) {
-                  setState(() {
-                    check[0] = value;
-                  });
-                },
-              ),
-              Text("dfgsdfgsdf")
-            ],
-          ),
-        ],
+    return Scaffolds.scroll(
+      appBar: AppBars.basic(
+        context: context,
+        title: tr("terms")
       ),
-    );
-
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Checkboxs.basic(
-            value:check[0],
-            onChanged: (value) {
-              setState(() {
-              check[0] = value;
-              });
-            },
-            widget: Row(children: [Text("dfgsdfgsdf")],)
-          )
-        ],
-      ),
+      body: Center(
+        // child: Texts.basic(
+        //   context: context,
+        //   text: "HTML을 render할 예정"
+        // ),
+        child: FutureBuilder(
+          future: downloadHtml(args.apiId),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting: return Text('Loading....');
+              default:
+                if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                else
+                return Text('Result: ${snapshot.data}');
+            }
+          } 
+        ),
+      )
     );
   }
 }
