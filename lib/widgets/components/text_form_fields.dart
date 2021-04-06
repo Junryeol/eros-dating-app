@@ -44,6 +44,15 @@ class TextFormFields {
               suffixIcon: suffixIcon,
               hintText: hintText,
               alignLabelWithHint: true,
+              errorStyle: TextStyle(
+                color: Color(0xfff2708f)
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xfff2708f)),
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xfff2708f), width: 2.0),
+              ),
             ),
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,

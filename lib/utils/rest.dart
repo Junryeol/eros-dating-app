@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
 
@@ -64,7 +65,7 @@ class Rest {
       _PARSE_APP_URL + "/health",
       headers: _header(),
     );
-    print(response.statusCode);
+    log(response.statusCode.toString());
     if (response.statusCode < 300 && _json2object(response)['status'] == "ok"){
       return true;
     }

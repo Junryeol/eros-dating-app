@@ -15,6 +15,7 @@ void main() {
       supportedLocales: I18n.locales,
       path: I18n.path,
       fallbackLocale: I18n.fallbackLocale,
+      saveLocale: false,
       child: App()
     )
   );
