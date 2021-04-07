@@ -6,7 +6,5 @@ properties:
     type: string
   tokenExpireSecond:
     type: integer
-    format: int32
   refreshTokenExpireSecond:
     type: integer
-    format: int32

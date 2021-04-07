@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/checkboxs.dart';

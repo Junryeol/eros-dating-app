@@ -36,7 +36,7 @@ dependencies:
   camera: ^0.7.0+2
   flutter_dialogs: ^1.1.0
   crypto: ^2.1.5
-  circular_check_box: ^1.0.4
+  simple_html_css: ^2.0.2
   flutter_markdown: ^0.5.2
   webview_flutter: ^1.0.7
   flutter_picker: ^1.1.5

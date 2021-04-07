@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:circular_check_box/circular_check_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/checkboxs.dart';
@@ -59,20 +58,20 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
                     text: tr("agree_all")
                   )
                 ),
-                CircularCheckBox(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  activeColor: Color(0xfff2708f),
-                  value: checkList.every((element) => element['check']),
-                  onChanged: (value) {
-                    log(value.toString());
-                    setState(() { 
-                      checkList.forEach((e) { 
-                        e['check'] = value;
-                        return e; 
-                      });
-                    });
-                  }
-                )
+                // CircularCheckBox(
+                //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                //   activeColor: Color(0xfff2708f),
+                //   value: checkList.every((element) => element['check']),
+                //   onChanged: (value) {
+                //     log(value.toString());
+                //     setState(() {
+                //       checkList.forEach((e) {
+                //         e['check'] = value;
+                //         return e;
+                //       });
+                //     });
+                //   }
+                // )
               ]
             ),
           ),
@@ -155,14 +154,14 @@ class _TermAgreement extends StatelessWidget {
               )
             )
           ),
-          CircularCheckBox(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            activeColor: Color(0xfff2708f),
-            value: checkValue,
-            onChanged: (value) {
-              onChange(value);
-            }
-          )
+          // CircularCheckBox(
+          //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          //   activeColor: Color(0xfff2708f),
+          //   value: checkValue,
+          //   onChanged: (value) {
+          //     onChange(value);
+          //   }
+          // )
         ]
       )
     );

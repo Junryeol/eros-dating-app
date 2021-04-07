@@ -20,14 +20,23 @@ paths:
     $ref: "./resources/account/me.yaml"
   /auth:
     $ref: "./resources/account/auth.yaml"
+  /find-email:
+    $ref: "./resources/account/findEmail.yaml"
+  /reset-password:
+    $ref: "./resources/account/resetPassword.yaml"
+
   /users:
     $ref: "./resources/users/users.yaml"
   /users/{userId}:
     $ref: "./resources/users/user.yaml"
+  /profiles/{userId}:
+    $ref: "./resources/users/profile.yaml"
+
   /files:
     $ref: "./resources/files/files.yaml"
   /files/{fileId}:
     $ref: "./resources/files/file.yaml"
+
 components:
   parameters:
     $ref: "./parameters/_index.yaml"
