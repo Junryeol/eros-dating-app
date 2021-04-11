@@ -108,7 +108,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
     } else {
       var isSend = _requestForFindEmail();
       if (isSend) {
-        _showAlertDialog();
+        _showAlertDialog(tr('send_complete'), tr('password_reset_send'));
       }
     }
   }
@@ -134,14 +134,14 @@ class _FindEmailPageState extends State<FindEmailPage> {
   }
 
   // 이 Alert 내용이 아직 없어서 비밀번호 재설정 화면과 동일한 상태
-  Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            tr('send_complete'),
+            title,
             style: TextStyle(
               color: Color(0xff252528),
               fontSize: 20,
@@ -151,7 +151,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
           ),
           contentPadding: EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 0.0),
           content: Text(
-                  tr('password_reset_send'),
+                  message,
                   style: TextStyle(
                     color: Color(0xff9a9297),
                     height: 1.7,
@@ -215,7 +215,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
               key: _keyPhone,
               context: context,
               controller: phoneController,
-              labelText: tr('phone'),
+              labelText: tr('phone_number'),
               hintText: tr('phone_hint'),
               prefixIcon: Icon(Icons.phone_android, color: _phonePrefixColor,),
               keyboardType: TextInputType.phone,

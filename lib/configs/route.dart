@@ -1,3 +1,4 @@
+import 'package:eros/widgets/pages/account/create_account_page.dart';
 import 'package:eros/widgets/pages/account/find_email_page.dart';
 import 'package:eros/widgets/pages/account/reset_password_page.dart';
 import 'package:eros/widgets/pages/account/terms_agreement_page.dart';
@@ -21,6 +22,7 @@ class RoutePath {
       '/intro': (context) => IntroPage(),
       '/error': (context) => ErrorPage(),
       '/sign_up': (context) => SignUpPage(),
+      '/create_account': (context) => CreateAccountPage(),
       '/sign_in': (context) => SignInPage(),
       '/find_email': (context) => FindEmailPage(),
       '/reset_password': (context) => ResetPasswordPage(),

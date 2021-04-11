@@ -71,7 +71,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     } else {
       var isSend = _requestForResetPassword();
       if (isSend) {
-        _showAlertDialog();
+        _showAlertDialog(tr('send_complete'), tr('password_reset_send'));
       }
     }
   }
@@ -86,14 +86,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return result['code'] == 200;
   }
 
-  Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            tr('send_complete'),
+            title,
             style: TextStyle(
               color: Color(0xff252528),
               fontSize: 20,
@@ -103,7 +103,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           ),
           contentPadding: EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 0.0),
           content: Text(
-                  tr('password_reset_send'),
+                  message,
                   style: TextStyle(
                     color: Color(0xff9a9297),
                     height: 1.7,
