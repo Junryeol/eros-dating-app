@@ -58,6 +58,19 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
                     text: tr("agree_all")
                   )
                 ),
+                Checkboxs.circle(
+                  context: context,
+                  value: checkList.every((element) => element['check']),
+                  onChanged: (value) {
+                    setState(() {
+                      checkList.forEach((e) {
+                        e['check'] = value;
+                        return e;
+                      });
+                    });
+                  },
+                  widget: SizedBox()
+                )
                 // CircularCheckBox(
                 //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 //   activeColor: Color(0xfff2708f),
@@ -101,7 +114,7 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
             text: tr("next"),
             fontSize: 20,
             fontWeight: FontWeight.w700,
-            onPressed: () { widget.pageController.nextPage(duration: Duration(seconds: 1), curve: Curves.ease); }
+            onPressed: () { widget.pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease); }
           )
         ],
       ),
@@ -154,14 +167,12 @@ class _TermAgreement extends StatelessWidget {
               )
             )
           ),
-          // CircularCheckBox(
-          //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          //   activeColor: Color(0xfff2708f),
-          //   value: checkValue,
-          //   onChanged: (value) {
-          //     onChange(value);
-          //   }
-          // )
+          Checkboxs.circle(
+            context: context,
+            value: checkValue,
+            onChanged: (value) => onChange(value),
+            widget: SizedBox(),
+          )
         ]
       )
     );

@@ -18,7 +18,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  
+  bool isDebugMode = true;
   PageController _pageController;
   int _index = 1;
 
@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: PageView(
               controller: _pageController,
               children: _pages,
-              physics: new NeverScrollableScrollPhysics(),
+              physics: isDebugMode ? null : new NeverScrollableScrollPhysics(),
               onPageChanged: (pageIndex) {
                 setState(() {
                   _index = pageIndex+1;

@@ -16,7 +16,7 @@ class _IndexPageState extends State<IndexPage> {
   Widget build(BuildContext context) {
     Map<String, dynamic> route = RoutePath.routes(context);
 
-    List<Widget> widgets = [];
+    List<Widget> widgets = [SizedBox(height: 40)];
     route.forEach((k,v) =>
       widgets.add(Container(
         width: double.infinity,
@@ -29,7 +29,7 @@ class _IndexPageState extends State<IndexPage> {
       ))
     );
 
-    return Scaffolds.basic(
+    return Scaffolds.scroll(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: widgets,

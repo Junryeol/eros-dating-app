@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
+import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
 import 'package:eros/widgets/components/texts.dart';
@@ -51,7 +52,7 @@ class _CertificationPageState extends State<CertificationPage> {
       });
     }
     // '-' 자동완성
-    if (input.length > 8 && input[8] != '-') {
+    if (input.length == 9 && input[8] != '-') {
       _phoneController.value = TextEditingValue(
         text: input.substring(0, 8) + '-' + input.substring(8),
         selection: TextSelection.fromPosition(
@@ -59,7 +60,7 @@ class _CertificationPageState extends State<CertificationPage> {
         )
       );
     }
-    if (input.length > 3 && input[3] != '-') {
+    if (input.length == 4 && input[3] != '-') {
       _phoneController.value = TextEditingValue(
         text: input.substring(0, 3) + '-' + input.substring(3),
         selection: TextSelection.fromPosition(
@@ -127,41 +128,11 @@ class _CertificationPageState extends State<CertificationPage> {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            title,
-            style: TextStyle(
-              color: Color(0xff252528),
-              fontSize: 20,
-              letterSpacing: 1.6,
-              fontWeight: FontWeight.w700
-            ),
-          ),
-          contentPadding: EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 0.0),
-          content: Text(
-                  message,
-                  style: TextStyle(
-                    color: Color(0xff9a9297),
-                    height: 1.7,
-                    fontSize: 14,
-                    letterSpacing: 0.28,
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                tr('confirm'),
-                style: TextStyle(
-                  color: Color(0xfff2708f),
-                  fontSize: 20,
-                  letterSpacing: 1.6,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop()
-            ),
-          ],
+        return Dialogs.alert(
+          context: context,
+          title: title,
+          content: message,
+          OnPressed: () => Navigator.of(context).pop()
         );
       },
     );
