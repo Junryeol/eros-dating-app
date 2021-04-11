@@ -13,10 +13,12 @@ import 'package:eros/widgets/pages/account/sign_up_page.dart';
 import 'package:eros/widgets/pages/system/splash_page.dart';
 import 'package:eros/widgets/pages/system/intro_page.dart';
 import 'package:eros/widgets/pages/profile/image_crop_page.dart';
+import 'package:eros/widgets/pages/test_page.dart';
 
 class RoutePath {
   static routes(context){
     return {
+      '/test': (context) => TestPage(),
       '/home': (context) => HomePage(),
       '/image_crop': (context) => ImageCropPage(),
       '/intro': (context) => IntroPage(),

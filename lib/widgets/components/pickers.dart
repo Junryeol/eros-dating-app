@@ -13,6 +13,9 @@ class Pickers {
       String hintText,
       List<String> pickerdata,
       Function onConfirm}) {
+
+    icon = Icon(icon.icon, color:Color(0xff706569),);
+
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),
@@ -59,6 +62,9 @@ class Pickers {
         Icon icon,
         String hintText,
         Function onConfirm}) {
+
+    icon = Icon(icon.icon, color:Color(0xff706569),);
+
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),
@@ -109,6 +115,9 @@ class Pickers {
         int end,
         int jump
       }) {
+
+    icon = Icon(icon.icon, color:Color(0xff706569),);
+    
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),

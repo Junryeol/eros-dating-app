@@ -2,10 +2,12 @@ type: object
 properties:
   email:
     type: string
-  name:
+  phone:
     type: string
   auth:
     type: boolean
   active:
     type: boolean
+  profile:
+    $ref: "./profile.yaml"
 

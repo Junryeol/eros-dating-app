@@ -4,6 +4,7 @@
   "description": "Multi-file boilerplate for Open API Specification.",
   "main": "index.js",
   "scripts": {
+    "val": "swagger-cli validate src/openapi.yaml",
     "build": "swagger-cli bundle src/openapi.yaml --outfile swagger.yaml --type yaml",
     "test": "npm run build && spectral lint swagger.yaml",
     "preview": "npm run build && redoc-cli serve swagger.yaml --options.onlyRequiredInSamples",

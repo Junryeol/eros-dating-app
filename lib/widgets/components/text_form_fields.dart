@@ -8,7 +8,7 @@ class TextFormFields {
       TextEditingController controller,
       String labelText,
       String hintText,
-      Widget prefixIcon,
+      Icon prefixIcon,
       Widget suffixIcon,
       bool obscureText = false,
       FocusNode focusNode,
@@ -37,7 +37,17 @@ class TextFormFields {
             controller: controller,
             keyboardType: keyboardType,
             obscureText: obscureText,
-            validator: validator,
+            validator: (String value) {
+              var result = validator(value);
+              print(result);
+              if (result != null){
+                prefixIcon = Icon(prefixIcon.icon, color:Color(0xfff2708f),);
+              }
+              else {
+                prefixIcon = Icon(prefixIcon.icon);
+              }
+              return result;
+            },
             onChanged: onChanged,
             decoration: InputDecoration(
               prefixIcon: prefixIcon,

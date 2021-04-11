@@ -4,4 +4,3 @@ description: 이미지 크기
 required: false
 schema:
   type: integer
-  format: int32

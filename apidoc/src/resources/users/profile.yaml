@@ -1,0 +1,15 @@
+get:
+  summary: 프로필 조회
+  description: 이메일이나 전화번호 같은 개인정보는 제외
+  tags:
+    - users
+  parameters:
+    - $ref: "../../parameters/path/userId.yaml"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/profile.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

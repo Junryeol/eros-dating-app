@@ -7,7 +7,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../../schemas/account/login.yaml"
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
   responses:
     '200':
       $ref: "../../responses/success.yaml"
