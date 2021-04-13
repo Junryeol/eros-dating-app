@@ -1,3 +1,4 @@
+import 'package:eros/widgets/pages/system/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/PickerLocalizationsDelegate.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
@@ -94,7 +95,7 @@ class _CertificationPageState extends State<CertificationPage> {
       return null;
     } else {
       setState(() {
-        _phonePrefixColor = Color(0xfff2708f);
+        _phonePrefixColor = Skin.primary;
       });
       return tr("phone_wrong");
     }

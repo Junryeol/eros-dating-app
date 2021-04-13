@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/providers/auth.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
+import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,17 +25,19 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmController = TextEditingController();
 
   GlobalKey<FormState> _keyEmail = GlobalKey<FormState>();
   GlobalKey<FormState> _keyPassword = GlobalKey<FormState>();
-  FocusNode focusEmail, focusPassword;
+  GlobalKey<FormState> _keyPasswordConfirm = GlobalKey<FormState>();
+  FocusNode focusEmail, focusPassword, focusPasswordConfirm;
 
   bool _isEmailEmpty = true;
   bool _isPasswordEmpty = true;
   bool _passwordVisibility = false;
+  bool _passwordConfirmVisibility = false;
 
-  Color _emailPrefixColor;
-  Color _passwordPrefixColor;
+  Color _emailPrefixColor, _passwordPrefixColor, _passwordConfirmPrefixColor;
 
   @override
   void initState() {
@@ -41,16 +45,21 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
     emailController.addListener(_onEmailChanged);
     passwordController.addListener(_onPasswordChanged);
+    passwordConfirmController.addListener(()=>{});
     focusEmail = FocusNode();
     focusPassword = FocusNode();
+    focusPasswordConfirm = FocusNode();
   }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    passwordConfirmController.dispose();
+
     focusEmail.dispose();
     focusPassword.dispose();
+    focusPasswordConfirm.dispose();
 
     super.dispose();
   }
@@ -76,6 +85,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   // 임시로 회원가입 때와 동일하게
   String _emailValidator(String value) {
     if (Valid.email(text: value.trim())) {
+      if (_requestEmailExists()) {
+        setState(() {
+          _emailPrefixColor = Skin.primary;
+        });
+        return tr("email_exists");
+      }
       setState(() {
         _emailPrefixColor = null;
       });
@@ -83,7 +98,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     }
     else {
       setState(() {
-        _emailPrefixColor = Color(0xfff2708f);
+        _emailPrefixColor = Skin.primary;
       });
       return tr("email_none");
     }
@@ -98,7 +113,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     }
     else {
       setState(() {
-        _passwordPrefixColor = Color(0xfff2708f);
+        _passwordPrefixColor = Skin.primary;
       });
       return tr("password_none");
     }
@@ -108,6 +123,16 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     setState(() {
       _passwordVisibility = !_passwordVisibility;
     });
+  }
+
+  bool _requestEmailExists() {
+    // TODO: 휴대폰 인증번호 전송 request
+    // response에 success/failed에 관련한 code 필요...?
+    var result = {
+      'code': 200
+    }; // 여기서 call하고 response 저장
+    // success code를 200이라 가정
+    return result['code'] == 200;
   }
 
   void _signIn() async {
@@ -137,16 +162,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
       child: Column(
         children: <Widget> [
-          SizedBox(height: 120),
-          Container(
-            child: Align(
-              alignment: Alignment.center,
-              child: Image(
-                width: 226,
-                height: 89,
-                image: AssetImage('assets/images/sign_in_logo.png')
-              ),
-            ),
+          SizedBox(height: 48),
+          Texts.basic(
+            context: context,
+            text: tr("create_account"),
+            textAlign: TextAlign.center,
+            height: 26,
+            fontSize: 24,
+            fontWeight: FontWeight.w700
           ),
           SizedBox(height: 48),
           TextFormFields.basic(
@@ -160,7 +183,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             focusNode: focusEmail,
             validator: _emailValidator,
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 36),
           TextFormFields.basic(
             key: _keyPassword,
             context: context,
@@ -177,61 +200,30 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             focusNode: focusPassword,
             validator: _passwordValidator
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 36),
+          TextFormFields.basic(
+            key: _keyPasswordConfirm,
+            context: context,
+            controller: passwordConfirmController,
+            labelText: tr('password_confirm'),
+            hintText: tr('password_hint'),
+            prefixIcon: Icon(Icons.lock, color: _passwordConfirmPrefixColor,),
+            suffixIcon: IconButton(
+              icon: Icon(_passwordConfirmVisibility ? Icons.visibility_off : Icons.visibility),
+              onPressed: _togglePasswordVisibility,
+            ),
+            obscureText: !_passwordConfirmVisibility,
+            keyboardType: TextInputType.visiblePassword,
+            focusNode: focusPassword,
+            validator: _passwordValidator
+          ),
+          SizedBox(height: 36),
           Buttons.primary(
             context: context,
-            text: tr('sign_in'),
+            text: tr('create_account'),
             active: !_isEmailEmpty & !_isPasswordEmpty,
             onPressed: _signIn
           ),
-          Container(
-            margin: EdgeInsets.only(top: 27),
-            height: 13,
-            child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  tr('sign_up_question'),
-                  style: TextStyle(fontSize: 12),
-                ),
-            )
-          ),
-          Container(
-              margin: EdgeInsets.only(top: 6),
-              height: 16,
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Buttons.transparency(
-                  context: context,
-                  // 왜 안뜨지...;;
-                  text: tr('sign_up'),
-                  onPressed: ()=>{Navigator.pushNamed(context, "/sign_up")},
-                  //style: TextStyle(fontSize: 14),
-                ),
-            )
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
-                crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
-                children: <Widget> [
-                  Buttons.transparency(
-                    context: context,
-                    text: tr('email_find'),
-                    onPressed: () => Navigator.pushNamed(context, "/find_email"),
-                  ),
-                  Divider(), // TODO: 컴포넌트 완성되면 대체
-                  Buttons.transparency(
-                    context: context,
-                    text: tr('password_find'),
-                    onPressed: () => Navigator.pushNamed(context, "/reset_password"),
-                  )
-                ],
-              )
-            )
-          ),
-          SizedBox(height: 48)
         ]
       ),
     );

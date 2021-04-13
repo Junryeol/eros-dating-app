@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/checkboxs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
@@ -71,27 +72,13 @@ class _TermsAgreementPageState extends State<TermsAgreementPage> {
                   },
                   widget: SizedBox()
                 )
-                // CircularCheckBox(
-                //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                //   activeColor: Color(0xfff2708f),
-                //   value: checkList.every((element) => element['check']),
-                //   onChanged: (value) {
-                //     log(value.toString());
-                //     setState(() {
-                //       checkList.forEach((e) {
-                //         e['check'] = value;
-                //         return e;
-                //       });
-                //     });
-                //   }
-                // )
               ]
             ),
           ),
           Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: Color(0xff9a9297),
+                color: Skin.bordergrey,
                 width: 1
               )
             )
@@ -146,7 +133,7 @@ class _TermAgreement extends StatelessWidget {
           Text(
             "["+ (isRequired ? tr("required") : tr("option"))+"]",
             style: TextStyle(
-              color: Color(0xfff2708f),
+              color: Skin.primary,
               fontSize: 14,
               fontWeight: FontWeight.w700,
               letterSpacing: 0.28
@@ -160,7 +147,7 @@ class _TermAgreement extends StatelessWidget {
                 child: Text(
                   tr(textId),
                   style: TextStyle(
-                    color: checkValue ? Color(0xff706569) : Color(0xffd8d2d2),
+                    color: checkValue ? Skin.grey : Skin.lightgrey,
                     fontSize: 14,
                   ),
                 )

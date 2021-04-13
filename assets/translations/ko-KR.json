@@ -12,6 +12,7 @@
   "email_wrong": "올바르지 않은 이메일 형식입니다",
   "email_find_title": "이메일 주소 찾기",
   "email_find_guide": "가입하신 휴대폰 번호로 회원님의\n이메일 주소를 보내드려요.", 
+  "email_exists": "이미 사용 중인 이메일 주소입니다",
   "password": "비밀번호",
   "password_hint": "비밀번호를 입력해주세요",
   "password_find": "비밀번호 찾기",

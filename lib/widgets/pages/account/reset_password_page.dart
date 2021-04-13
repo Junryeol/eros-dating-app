@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
@@ -59,7 +60,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     }
     else {
       setState(() {
-        _emailPrefixColor = Color(0xfff2708f);
+        _emailPrefixColor = Skin.primary;
       });
       return tr("email_wrong");
     }
@@ -127,7 +128,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               tr("password_reset_guide"),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xffd8d2d2),
+                color: Skin.lightgrey,
                 height: 1.7,
                 fontSize: 14.0,
                 fontWeight: FontWeight.w300

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/providers/auth.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/buttons.dart';
@@ -81,7 +82,7 @@ class _SignInPageState extends State<SignInPage> {
     }
     else {
       setState(() {
-        _emailPrefixColor = Color(0xfff2708f);
+        _emailPrefixColor = Skin.primary;
       });
       return tr("email_none");
     }
@@ -96,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
     }
     else {
       setState(() {
-        _passwordPrefixColor = Color(0xfff2708f);
+        _passwordPrefixColor = Skin.primary;
       });
       return tr("password_none");
     }
