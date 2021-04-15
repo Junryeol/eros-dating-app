@@ -38,6 +38,17 @@ class Buttons {
     );
   }
 
+  static cash({BuildContext context, String text, Function onPressed, double fontSize = 14.0, fontWeight = FontWeight.w300}){
+    return Ink(
+      child: TextButton(
+        child: Container(
+          child: Text(text, style: TextStyle(color: Color(0xffd8d2d2), fontSize: fontSize, fontWeight: fontWeight,)),
+        ),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
   static content({BuildContext context, Widget widget, Function onPressed}){
     return Ink(
       child: TextButton(
