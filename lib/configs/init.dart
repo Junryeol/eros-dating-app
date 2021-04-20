@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:eros/widgets/pages/system/splash_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +12,8 @@ class Init {
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
     globals.prefs = await SharedPreferences.getInstance();
-
+    // 스플래시 화면을 위한 고정 딜레이
+    await Future.delayed(new Duration(milliseconds: 500));
     loadResource();
     // TODO: 디바이스 네트워크 체크 추가 필요
     var rest = Rest();

@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image/image.dart' as ImageProcess;
 // import 'package:flutter_svg/svg.dart';
 
 class SplashPage extends StatelessWidget {
@@ -49,41 +55,31 @@ class SplashPage extends StatelessWidget {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
-    Future preload = Future.wait([
-      precacheImage(AssetImage("assets/images/logo.png"), context),
-      precacheImage(AssetImage("assets/images/logo_and_text.png"), context)
-    ]);
+
     return Scaffolds.basic(
-      body: FutureBuilder(
-        future: preload,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return Container();
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildTitle(),
-                SizedBox(height: 96),
-                Image(
-                  width: 237,
-                  height: 163,
-                  image: AssetImage('assets/images/logo.png')
-                ),
-                SizedBox(height: 96),
-                Image(
-                  width: 222.7,
-                  height: 46,
-                  image: AssetImage('assets/images/logo_and_text.png')
-                ),
-                // SvgPicture.asset("assets/images/logo.svg"),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildTitle(),
+            SizedBox(height: 96),
+            Image(
+              width: 237,
+              height: 163,
+              image: AssetImage('assets/images/logo.png')
             ),
-          );
-        }
+            SizedBox(height: 96),
+            Image(
+              width: 222.7,
+              height: 46,
+              image: AssetImage('assets/images/logo_and_text.png')
+            ),
+            // SvgPicture.asset("assets/images/logo.svg"),
+          ],
+        ),
       )
     );
   }

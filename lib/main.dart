@@ -25,6 +25,10 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // 스플래시 화면 내 이미지 precache
+    precacheImage(AssetImage('assets/images/logo_and_text.png'), context);
+    precacheImage(AssetImage('assets/images/logo.png'), context);
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Auth>(create: (_) => Auth()),
