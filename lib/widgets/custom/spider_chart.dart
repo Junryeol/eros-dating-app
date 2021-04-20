@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
 
 class SpiderChart extends StatelessWidget {
-  final List<double> data;
+  final List<List<double>> data;
   final double maxValue;
   final List<Color> colors;
   final List<String> labels;
@@ -23,9 +23,9 @@ class SpiderChart extends StatelessWidget {
     this.decimalPrecision = 0,
     this.fallbackHeight = 200,
     this.fallbackWidth = 200,
-  })  : assert(data.length == colors.length,
+  })  : assert(data[0].length == colors.length,
   'Length of data and color lists must be equal'),
-        assert(labels != null ? data.length == labels.length : true,
+        assert(labels != null ? data[0].length == labels.length : true,
         'Length of data and labels lists must be equal'),
         super(key: key);
 
@@ -36,15 +36,14 @@ class SpiderChart extends StatelessWidget {
       maxHeight: fallbackHeight,
       child: CustomPaint(
         size: size,
-        painter: SpiderChartPainter(
-            data, maxValue, colors, labels, decimalPrecision),
+        painter: SpiderChartPainter(data, maxValue, colors, labels, decimalPrecision),
       ),
     );
   }
 }
 
 class SpiderChartPainter extends CustomPainter {
-  final List<double> data;
+  final List<List<double>> data;
   final double maxNumber;
   final List<Color> colors;
   final List<String> labels;
@@ -60,28 +59,17 @@ class SpiderChartPainter extends CustomPainter {
     ..color = Color.fromARGB(255, 50, 50, 50)
     ..style = PaintingStyle.stroke;
 
-  SpiderChartPainter(this.data, this.maxNumber, this.colors, this.labels,
-      this.decimalPrecision);
+  SpiderChartPainter(this.data, this.maxNumber, this.colors, this.labels, this.decimalPrecision);
 
   @override
   void paint(Canvas canvas, Size size) {
     Offset center = size.center(Offset.zero);
 
-    double angle = (2 * pi) / data.length;
+    double angle = (2 * pi) / data[0].length;
 
-    var dataPoints = List<Offset>();
+    var outerPoints = <Offset>[];
 
-    for (var i = 0; i < data.length; i++) {
-      var scaledRadius = (data[i] / maxNumber) * center.dy;
-      var x = scaledRadius * cos(angle * i - pi / 2);
-      var y = scaledRadius * sin(angle * i - pi / 2);
-
-      dataPoints.add(Offset(x, y) + center);
-    }
-
-    var outerPoints = List<Offset>();
-
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data[0].length; i++) {
       var x = center.dy * cos(angle * i - pi / 2);
       var y = center.dy * sin(angle * i - pi / 2);
 
@@ -91,10 +79,25 @@ class SpiderChartPainter extends CustomPainter {
     if (this.labels != null) {
       paintLabels(canvas, center, outerPoints, this.labels);
     }
+
     paintGraphOutline(canvas, center, outerPoints);
-    paintDataLines(canvas, dataPoints);
-    paintDataPoints(canvas, dataPoints);
-    paintText(canvas, center, dataPoints, data);
+
+
+    for (var j = 0; j < data.length; j++) {
+      var dataPoints = <Offset>[];
+
+      for (var i = 0; i < data[0].length; i++) {
+        var scaledRadius = (data[j][i] / maxNumber) * center.dy;
+        var x = scaledRadius * cos(angle * i - pi / 2);
+        var y = scaledRadius * sin(angle * i - pi / 2);
+
+        dataPoints.add(Offset(x, y) + center);
+      }
+
+      paintDataLines(canvas, dataPoints);
+      // paintDataPoints(canvas, dataPoints);
+      // paintText(canvas, center, dataPoints, data);
+    }
   }
 
   void paintDataLines(Canvas canvas, List<Offset> points) {
@@ -138,16 +141,20 @@ class SpiderChartPainter extends CustomPainter {
   }
 
   void paintGraphOutline(Canvas canvas, Offset center, List<Offset> points) {
-    for (var i = 0; i < points.length; i++) {
-      canvas.drawLine(center, points[i], spokes);
-    }
-
-    //TODO: this could cause a rendering issue later if the rendering order is ever changed
-    //        using the spread operator in 'drawPoints' would fix this, but would require a
-    //        dart version bump.
     points.add(points[0]);
 
-    canvas.drawPoints(PointMode.polygon, points, spokes);
+    for (var mash = 2.0; mash <= 5; mash++) {
+      for (var i = 0; i < points.length; i++) {
+        points[i] = (points[i] - center) * (mash / 5) + center;
+        canvas.drawLine(center, points[i], spokes);
+      }
+
+      canvas.drawPoints(PointMode.polygon, points, spokes);
+
+      for (var i = 0; i < points.length; i++) {
+        points[i] = (points[i] - center) / (mash / 5) + center;
+      }
+    }
     canvas.drawCircle(center, 2, spokes);
   }
 
@@ -162,15 +169,15 @@ class SpiderChartPainter extends CustomPainter {
       textPainter.layout();
       if (points[i].dx < center.dx) {
         textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width + 5.0), -15));
+            canvas, points[i].translate(-(textPainter.size.width + 5.0), -10));
       } else if (points[i].dx > center.dx) {
-        textPainter.paint(canvas, points[i].translate(5.0, -15));
+        textPainter.paint(canvas, points[i].translate(5.0, -10));
       } else if (points[i].dy < center.dy) {
         textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width / 2), -35));
+            canvas, points[i].translate(-(textPainter.size.width / 2), -20)); // top
       } else {
         textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width / 2), 20));
+            canvas, points[i].translate(-(textPainter.size.width / 2), 5)); // bottom
       }
     }
   }
