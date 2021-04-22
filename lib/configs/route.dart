@@ -7,6 +7,7 @@ import 'package:eros/widgets/pages/home_page.dart';
 import 'package:eros/widgets/pages/index_page.dart';
 import 'package:eros/widgets/pages/profile/basic_profile_page.dart';
 import 'package:eros/widgets/pages/profile/profile_tag_select_page.dart';
+import 'package:eros/widgets/pages/profile/register_profile_page.dart';
 import 'package:eros/widgets/pages/system/error_page.dart';
 import 'package:eros/widgets/pages/account/sign_in_page.dart';
 import 'package:eros/widgets/pages/account/sign_up_page.dart';
@@ -24,12 +25,9 @@ class RoutePath {
       '/intro': (context) => IntroPage(),
       '/error': (context) => ErrorPage(),
       '/sign_up': (context) => SignUpPage(),
-      '/create_account': (context) => CreateAccountPage(),
       '/sign_in': (context) => SignInPage(),
-      '/find_email': (context) => FindEmailPage(),
-      '/reset_password': (context) => ResetPasswordPage(),
+      '/register_profile': (context) => RegisterProfilePage(),
       '/splash': (context) => SplashPage(),
-      '/terms_agreement': (context) => TermsAgreementPage(),
       '/terms_detail': (context) => TermsDetailPage(),
       '/index': (context) => IndexPage(),
       '/basic_profile': (context) => BasicProfilePage(),
