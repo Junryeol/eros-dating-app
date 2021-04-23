@@ -113,7 +113,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   // 임시로 회원가입 때와 동일하게
   String _emailValidator(String value) {
     var textvalue = emailController.text;
-    log(textvalue);
     if (textvalue.isEmpty) {
       setState(() {
         _emailPrefixColor = null;

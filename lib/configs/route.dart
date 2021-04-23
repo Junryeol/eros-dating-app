@@ -1,13 +1,9 @@
-import 'package:eros/widgets/pages/account/create_account_page.dart';
-import 'package:eros/widgets/pages/account/find_email_page.dart';
-import 'package:eros/widgets/pages/account/reset_password_page.dart';
-import 'package:eros/widgets/pages/account/terms_agreement_page.dart';
+
 import 'package:eros/widgets/pages/account/terms_detail_page.dart';
 import 'package:eros/widgets/pages/home_page.dart';
 import 'package:eros/widgets/pages/index_page.dart';
-import 'package:eros/widgets/pages/profile/basic_profile_page.dart';
 import 'package:eros/widgets/pages/profile/profile_tag_select_page.dart';
-import 'package:eros/widgets/pages/profile/register_profile_page.dart';
+import 'package:eros/widgets/pages/profile/register_profile_screen.dart';
 import 'package:eros/widgets/pages/system/error_page.dart';
 import 'package:eros/widgets/pages/account/sign_in_page.dart';
 import 'package:eros/widgets/pages/account/sign_up_page.dart';
@@ -26,11 +22,10 @@ class RoutePath {
       '/error': (context) => ErrorPage(),
       '/sign_up': (context) => SignUpPage(),
       '/sign_in': (context) => SignInPage(),
-      '/register_profile': (context) => RegisterProfilePage(),
+      '/register_profile': (context) => RegisterProfileScreen(),
       '/splash': (context) => SplashPage(),
       '/terms_detail': (context) => TermsDetailPage(),
       '/index': (context) => IndexPage(),
-      '/basic_profile': (context) => BasicProfilePage(),
       '/profile_tag_select': (context) => ProfileTagSelectPage(),
     };
   }

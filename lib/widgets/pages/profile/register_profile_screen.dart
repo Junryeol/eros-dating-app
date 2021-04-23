@@ -4,20 +4,21 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/i18n.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/linear_progresses.dart';
-import 'package:eros/widgets/components/page_indicators.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/pages/profile/profile_tag_select_page.dart';
+import 'package:eros/widgets/pages/profile/register_basic_profile_page.dart';
 import 'package:flutter/material.dart';
 
-class RegisterProfilePage extends StatefulWidget {
-  RegisterProfilePage({Key key}) : super(key: key);
+class RegisterProfileScreen extends StatefulWidget {
+  RegisterProfileScreen({Key key}) : super(key: key);
 
   @override
-  _RegisterProfilePageState createState() => _RegisterProfilePageState();
+  _RegisterProfileScreenState createState() => _RegisterProfileScreenState();
 }
 
-class _RegisterProfilePageState extends State<RegisterProfilePage> {
+class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
   bool isDebugMode = true;
+  bool isPageLoaded = false;
   PageController _pageController;
   int _index = 1;
 
@@ -26,7 +27,16 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
   @override
   void initState() {
     super.initState();
+
     _pageController = PageController();
+    _pages.add(RegisterBasicProfilePage(finish: nextPage));
+    Future.delayed(Duration.zero, () {
+      Future.wait([
+        buildTagPage("charming_point"),
+        buildTagPage("ideal_type"),
+        buildTagPage("hobbies")
+      ]).then((value) => setState(() { _pages.addAll(value); isPageLoaded = true; }));
+    });
   }
 
   @override
@@ -35,11 +45,9 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
     super.dispose();
   }
 
-  void addPage(int index, String id, List<String> tags) {
-    Widget newPage = ProfileTagSelectPage(id: id, tags: tags, finish: nextPage);
-    setState(() {
-      _pages.insert(index, newPage);
-    });
+  Future<Widget> buildTagPage(String id) async {
+    var tags = await I18n.getList(context.locale, "tag_list.$id");
+    return ProfileTagSelectPage(id: id, tags: tags, finish: nextPage);
   }
 
   void nextPage() {
@@ -48,19 +56,14 @@ class _RegisterProfilePageState extends State<RegisterProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_pages.length == 0) {
-      I18n.getList(context.locale, "tag_list.charming_point").then((value) => addPage(0, "charming_point", value));
-      I18n.getList(context.locale, "tag_list.ideal_type").then((value) => addPage(1, "ideal_type", value));
-      I18n.getList(context.locale, "tag_list.hobbies").then((value) => addPage(2, "hobbies", value));
-    }
     return Scaffolds.basic(
       context: context,
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBars.basic(
         context: context,
         title: tr("register_profile")
       ),
-      body: _pages.length == 3 ? Column(
+      body: isPageLoaded ? Column(
         children: [
           LinearProgresses.basic(
             context: context,
