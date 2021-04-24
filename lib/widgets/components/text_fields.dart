@@ -6,6 +6,7 @@ class TextFields {
         TextEditingController controller,
         String hintText,
         Function onSubmitted,
+        int maxLines = 1,
         TextInputType keyboardType}) {
 
     return TextField(
@@ -14,6 +15,7 @@ class TextFields {
         border: OutlineInputBorder(),
         hintText: hintText,
       ),
+      maxLines: maxLines,
       keyboardType: keyboardType,
       onSubmitted: onSubmitted,
     );

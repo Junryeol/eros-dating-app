@@ -7,6 +7,7 @@ servers:
   - url: https://localhost/dev
 tags:
   - name: account
+  - name: config`
   - name: users
   - name: files
 paths:
@@ -24,6 +25,11 @@ paths:
     $ref: "./resources/account/findEmail.yaml"
   /reset-password:
     $ref: "./resources/account/resetPassword.yaml"
+
+  /config:
+    $ref: "./resources/configs/config.yaml"
+  /terms:
+    $ref: "./resources/terms/terms.yaml"
 
   /users:
     $ref: "./resources/users/users.yaml"
