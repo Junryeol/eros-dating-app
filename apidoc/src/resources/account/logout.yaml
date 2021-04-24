@@ -1,3 +1,13 @@
+get:
+  summary: 사용자 로그아웃
+  description: 로그아웃 해더에 Access 토큰 있음, refresh 토큰도 만료되어야함
+  tags:
+    - account
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
 post:
   summary: 사용자 로그아웃
   description: 로그아웃 해더에 Access 토큰 있음, refresh 토큰도 만료되어야함

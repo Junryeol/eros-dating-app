@@ -9,7 +9,8 @@ class TextFields {
         TextInputType keyboardType,
         Widget prefixIcon,
         FocusNode focusNode,
-        bool autoFocus}) {
+        bool autoFocus,
+        int maxLines = 1}) {
 
     return TextField(
       controller: controller,
@@ -20,6 +21,7 @@ class TextFields {
       ),
       focusNode: focusNode,
       autofocus: autoFocus,
+      maxLines: maxLines,
       keyboardType: keyboardType,
       onSubmitted: onSubmitted,
     );

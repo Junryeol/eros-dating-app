@@ -1,4 +1,5 @@
-import 'package:eros/configs/skin.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class Images {
