@@ -8,6 +8,7 @@ class Skin {
   static final lightgrey = Color(0xffd8d2d2);
   static final bordergrey = Color(0xff9a9297);
   static final primary = Color(0xfff2708f);
+  static final disabled = Color(0xccebe8e8);
 
   static ThemeData light() {
     var brightness = Brightness.light;

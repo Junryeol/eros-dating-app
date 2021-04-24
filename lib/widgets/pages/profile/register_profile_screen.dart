@@ -7,6 +7,7 @@ import 'package:eros/widgets/components/linear_progresses.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/pages/profile/profile_tag_select_page.dart';
 import 'package:eros/widgets/pages/profile/register_basic_profile_page.dart';
+import 'package:eros/widgets/pages/profile/upload_profile_image_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterProfileScreen extends StatefulWidget {
@@ -29,13 +30,19 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
     super.initState();
 
     _pageController = PageController();
-    _pages.add(RegisterBasicProfilePage(finish: nextPage));
+    _pages.addAll([
+      RegisterBasicProfilePage(finish: nextPage),
+      UploadProfileImagePage(finish: nextPage),
+    ]);
     Future.delayed(Duration.zero, () {
       Future.wait([
         buildTagPage("charming_point"),
         buildTagPage("ideal_type"),
         buildTagPage("hobbies")
-      ]).then((value) => setState(() { _pages.addAll(value); isPageLoaded = true; }));
+      ]).then((value) => setState(() { 
+        _pages.insertAll(1, value);
+        isPageLoaded = true; 
+      }));
     });
   }
 
