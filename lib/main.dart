@@ -1,3 +1,4 @@
+import 'package:eros/widgets/pages/system/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/PickerLocalizationsDelegate.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,10 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // 스플래시 화면 내 이미지 precache
+    precacheImage(AssetImage('assets/images/logo_and_text.png'), context);
+    precacheImage(AssetImage('assets/images/logo.png'), context);
+    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Auth>(create: (_) => Auth()),

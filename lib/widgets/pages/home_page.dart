@@ -15,21 +15,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    Auth auth = Provider.of<Auth>(context);
-    auth.me();
-    var email = auth.user["email"];
-    var objectId = auth.user["objectId"];
+    // Auth auth = Provider.of<Auth>(context);
+    // auth.me();
+    // var email = auth.user["email"];
+    // var objectId = auth.user["objectId"];
 
     return Scaffold(
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(email),
-            Text(objectId),
+            Text("snoopykim0@gmail.com"),
+            Text("objectId는 뭐여"),
             Buttons.primary(
               text: tr("sign_out"),
               onPressed: () {
-                auth.signout(context: context);
+                // auth.signout(context: context);
               },
             ),
           ],

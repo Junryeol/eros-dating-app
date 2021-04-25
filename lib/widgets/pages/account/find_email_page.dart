@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
+import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
 import 'package:eros/widgets/components/texts.dart';
@@ -90,12 +92,12 @@ class _FindEmailPageState extends State<FindEmailPage> {
       return null;
     } else if (!_requestForPhoneExist()) {
       setState(() {
-        _phonePrefixColor = Color(0xfff2708f);
+        _phonePrefixColor = Skin.primary;
       });
       return tr("phone_none");
     } else {
       setState(() {
-        _phonePrefixColor = Color(0xfff2708f);
+        _phonePrefixColor = Skin.primary;
       });
       return tr("phone_wrong");
     }
@@ -108,7 +110,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
     } else {
       var isSend = _requestForFindEmail();
       if (isSend) {
-        _showAlertDialog();
+        _showAlertDialog(tr('send_complete'), tr('password_reset_send'));
       }
     }
   }
@@ -134,46 +136,16 @@ class _FindEmailPageState extends State<FindEmailPage> {
   }
 
   // 이 Alert 내용이 아직 없어서 비밀번호 재설정 화면과 동일한 상태
-  Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            tr('send_complete'),
-            style: TextStyle(
-              color: Color(0xff252528),
-              fontSize: 20,
-              letterSpacing: 1.6,
-              fontWeight: FontWeight.w700
-            ),
-          ),
-          contentPadding: EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 0.0),
-          content: Text(
-                  tr('password_reset_send'),
-                  style: TextStyle(
-                    color: Color(0xff9a9297),
-                    height: 1.7,
-                    fontSize: 14,
-                    letterSpacing: 0.28,
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                tr('confirm'),
-                style: TextStyle(
-                  color: Color(0xfff2708f),
-                  fontSize: 20,
-                  letterSpacing: 1.6,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop()
-            ),
-          ],
+        return Dialogs.alert(
+          context: context,
+          title: title,
+          content: message,
+          OnPressed: () => Navigator.of(context).pop()
         );
       },
     );
@@ -204,7 +176,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
               tr("email_find_guide"),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xffd8d2d2),
+                color: Skin.lightgrey,
                 height: 1.7,
                 fontSize: 14.0,
                 fontWeight: FontWeight.w300
@@ -215,7 +187,7 @@ class _FindEmailPageState extends State<FindEmailPage> {
               key: _keyPhone,
               context: context,
               controller: phoneController,
-              labelText: tr('phone'),
+              labelText: tr('phone_number'),
               hintText: tr('phone_hint'),
               prefixIcon: Icon(Icons.phone_android, color: _phonePrefixColor,),
               keyboardType: TextInputType.phone,

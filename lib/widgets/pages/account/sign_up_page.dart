@@ -2,8 +2,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
+import 'package:eros/widgets/components/linear_progresses.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/pages/account/certification_page.dart';
+import 'package:eros/widgets/pages/account/create_account_page.dart';
 import 'package:eros/widgets/pages/account/terms_agreement_page.dart';
 import 'package:eros/widgets/pages/system/intro_page.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  
+  bool isDebugMode = true;
   PageController _pageController;
+  int _index = 1;
 
   @override
   void initState() {
@@ -33,25 +36,37 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _pages = [
+      TermsAgreementPage(pageController: _pageController),
+      CertificationPage(pageController: _pageController),
+      CreateAccountPage(pageController: _pageController),
+    ];
+
     return Scaffolds.basic(
+      context: context,
+      resizeToAvoidBottomInset: false,
       appBar: AppBars.basic(
         context: context,
         title: tr("sign_up")
       ),
       body: Column(
         children: [
-          Container(height: 4, color: Color(0xffffeeee),),
+          LinearProgresses.basic(
+            context: context,
+            value: _index / _pages.length
+          ),
           Expanded(
-            flex: 1,
             child: PageView(
               controller: _pageController,
-              children: [
-                TermsAgreementPage(pageController: _pageController),
-                CertificationPage(pageController: _pageController),
-              ],
-              physics: new NeverScrollableScrollPhysics(),
+              children: _pages,
+              physics: isDebugMode ? null : new NeverScrollableScrollPhysics(),
+              onPageChanged: (pageIndex) {
+                setState(() {
+                  _index = pageIndex+1;
+                });
+              },
             )
-          )
+          ),
         ]
       )
     );

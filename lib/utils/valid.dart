@@ -4,7 +4,7 @@ class Valid {
   }
 
   static bool password({String text}){
-    return RegExp(r"(?=.*\d)(?=.*[a-z]).{8,}").hasMatch(text);
+    return RegExp(r"""^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$""").hasMatch(text);
   }
 
   static bool phone({String text}){

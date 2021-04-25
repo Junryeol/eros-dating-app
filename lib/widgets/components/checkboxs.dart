@@ -21,9 +21,9 @@ class Checkboxs {
       children: <Widget>[
         Checkbox(
           activeColor: Color(0xfff2708f),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
-          ),
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(15)
+          // ),
           value: value,
           onChanged: onChanged,
         ),

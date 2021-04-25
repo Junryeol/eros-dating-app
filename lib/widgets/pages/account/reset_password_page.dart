@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/skin.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
+import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/labels.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
@@ -58,7 +60,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     }
     else {
       setState(() {
-        _emailPrefixColor = Color(0xfff2708f);
+        _emailPrefixColor = Skin.primary;
       });
       return tr("email_wrong");
     }
@@ -71,7 +73,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     } else {
       var isSend = _requestForResetPassword();
       if (isSend) {
-        _showAlertDialog();
+        _showAlertDialog(tr('send_complete'), tr('password_reset_send'));
       }
     }
   }
@@ -86,46 +88,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return result['code'] == 200;
   }
 
-  Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            tr('send_complete'),
-            style: TextStyle(
-              color: Color(0xff252528),
-              fontSize: 20,
-              letterSpacing: 1.6,
-              fontWeight: FontWeight.w700
-            ),
-          ),
-          contentPadding: EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 0.0),
-          content: Text(
-                  tr('password_reset_send'),
-                  style: TextStyle(
-                    color: Color(0xff9a9297),
-                    height: 1.7,
-                    fontSize: 14,
-                    letterSpacing: 0.28,
-                    fontWeight: FontWeight.w300
-                  ),
-                ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                tr('confirm'),
-                style: TextStyle(
-                  color: Color(0xfff2708f),
-                  fontSize: 20,
-                  letterSpacing: 1.6,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop()
-            ),
-          ],
+        return Dialogs.alert(
+          context: context,
+          title: title,
+          content: message,
+          OnPressed: () => Navigator.of(context).pop()
         );
       },
     );
@@ -156,7 +128,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               tr("password_reset_guide"),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color(0xffd8d2d2),
+                color: Skin.lightgrey,
                 height: 1.7,
                 fontSize: 14.0,
                 fontWeight: FontWeight.w300

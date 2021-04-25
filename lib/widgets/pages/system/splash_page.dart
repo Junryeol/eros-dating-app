@@ -1,16 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image/image.dart' as ImageProcess;
 // import 'package:flutter_svg/svg.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   SplashPage({Key key}) : super(key: key);
-
-  @override
-  _SplashPageState createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
 
   Widget _buildTitle() {
     return RichText(
@@ -20,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
           TextSpan(
             text: "이상형 소개",
             style: TextStyle(
-              color: Color(0xfff2708f),
+              color: Skin.primary,
               fontSize: 36.0,
               fontWeight: FontWeight.w700
             )
@@ -28,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
           TextSpan(
             text: "부터\n",
             style: TextStyle(
-              color: Color(0xff706569),
+              color: Skin.grey,
               fontSize: 36.0,
               fontWeight: FontWeight.w700,
             )
@@ -36,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
           TextSpan(
             text: "오프라인 만남",
             style: TextStyle(
-              color: Color(0xfff2708f),
+              color: Skin.primary,
               fontSize: 36.0,
               fontWeight: FontWeight.w700
             )
@@ -44,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
           TextSpan(
             text: "까지",
             style: TextStyle(
-              color: Color(0xff706569),
+              color: Skin.grey,
               fontSize: 36.0,
               fontWeight: FontWeight.w700
             )
@@ -54,8 +55,10 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffolds.basic(
       body: Center(
         child: Column(
@@ -77,7 +80,7 @@ class _SplashPageState extends State<SplashPage> {
             // SvgPicture.asset("assets/images/logo.svg"),
           ],
         ),
-      ),
+      )
     );
   }
 }
