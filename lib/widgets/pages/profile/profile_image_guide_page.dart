@@ -85,7 +85,7 @@ class ProfileImageGuidePage extends StatelessWidget {
     double imageWidth = (MediaQuery.of(context).size.width-(paddingHorizontal*2+marginBetween))/2;
     return Scaffolds.scroll(
       context: context,
-      appBar: AppBars.basic(
+      appBar: AppBars.popup(
         context: context,
         title: tr("guide")
       ),

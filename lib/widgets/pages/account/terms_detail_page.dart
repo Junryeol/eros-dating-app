@@ -32,7 +32,7 @@ class TermsDetailPage extends StatelessWidget {
     final TermsDetailArguments args = ModalRoute.of(context).settings.arguments as TermsDetailArguments;
 
     return Scaffolds.scroll(
-      appBar: AppBars.basic(
+      appBar: AppBars.popup(
         context: context,
         title: tr("terms")
       ),
@@ -47,7 +47,7 @@ class TermsDetailPage extends StatelessWidget {
             value: 0
           ),
           FutureBuilder(
-            future: downloadHtml(args.apiId),
+            future: downloadHtml(args != null ? args.apiId : "default ID"),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting: return Text('Loading....');
