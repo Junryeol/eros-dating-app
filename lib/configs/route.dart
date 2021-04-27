@@ -5,6 +5,7 @@ import 'package:eros/widgets/pages/account/terms_detail_page.dart';
 import 'package:eros/widgets/pages/home_page.dart';
 import 'package:eros/widgets/pages/index_page.dart';
 import 'package:eros/widgets/pages/profile/profile_image_guide_page.dart';
+import 'package:eros/widgets/pages/profile/profile_page.dart';
 import 'package:eros/widgets/pages/profile/profile_tag_select_page.dart';
 import 'package:eros/widgets/pages/profile/register_profile_screen.dart';
 import 'package:eros/widgets/pages/system/error_page.dart';
@@ -31,6 +32,7 @@ class RoutePath {
       '/splash': (context) => SplashPage(),
       '/terms_detail': (context) => TermsDetailPage(),
       '/image_guide': (context) => ProfileImageGuidePage(),
+      '/profile': (context) => ProfilePage(),
       '/index': (context) => IndexPage(),
     };
   }

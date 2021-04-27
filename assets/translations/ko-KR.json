@@ -61,6 +61,7 @@
   "next": "다음",
   "confirm": "확인",
   "cancel": "취소",
+  "basic_info": "기본 정보",
   "register_basic_profile": "기본 정보 작성",
   "register_basic_profile_message": "허위로 프로필 작성 시, 이용 제한 및\n법적책임 등이수반될 수 있어요.",
   "confirm_duplication": "중복확인",
@@ -110,6 +111,8 @@
   "unsuitable_image_guide_3": "어둡고 흐린 사진",
   "unsuitable_image_guide_4": "얼굴에 스티커를\n붙인 사진",
   "represent": "대표",
+  "charming_index": "매력 지수", 
+  "tell_your_personality": "상대방에게 당신의 성격을 알려주세요",
   "add": "추가",
   "tag": "태그",
   "tag_list": {
