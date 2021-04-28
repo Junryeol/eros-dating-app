@@ -9,7 +9,7 @@ class TextFields {
         TextInputType keyboardType,
         Widget prefixIcon,
         FocusNode focusNode,
-        bool autoFocus,
+        bool autoFocus = false,
         int maxLines = 1}) {
 
     return TextField(
