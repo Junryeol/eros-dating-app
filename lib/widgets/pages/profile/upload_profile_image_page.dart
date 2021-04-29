@@ -80,7 +80,6 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
   }
 
   void onImageTap(int idx) {
-    log("Image [$idx] tapped!");
     setState(() {
       if (idx == _imageList.length) {
         _imageList.add('image');
@@ -175,7 +174,6 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(_imageList.toString());
     return Padding(
       padding: EdgeInsets.only(left: 32, right: 32),
       child: Column(

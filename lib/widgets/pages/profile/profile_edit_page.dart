@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
+import 'package:eros/widgets/components/add_chip_button.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/chips.dart';
@@ -77,7 +78,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   void onImageTap(int idx) {
-    log("Image [$idx] tapped!");
     setState(() {
       if (idx == imageList.length) {
         imageList.add('image');
@@ -87,22 +87,20 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     });
   }
 
-  void inputTag() {
-    var value = tagController.text;
-    if (value.trim().length > 0) {
-      userCharmingPoint.insert(0, value);
-      selectTag(value);
+  void inputTag(String tag) {
+    if (tag.length > 0) {
+      setState(() { userCharmingPoint = [tag, ...userCharmingPoint]; });
+      selectTag(tag);
     }
     setState(() {
       inputActive = false;
     });
-    // FocusScope.of(context).unfocus();
   }
-  void selectTag(String value) {
+  void selectTag(String tag) {
     if (selectedTags.length >= 10) {
       Toasts.basicShow(context: context, text: tr("tag_select_limit"));
     } else {
-      selectedTags.add(value);
+      setState(() { selectedTags = [...selectedTags, tag]; });
     }
   }
 
@@ -260,29 +258,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               selectedTags: [],
               onSelected: (String tag, bool selected) {}
             ),
-            inputActive ? 
-            TextFields.basic(
-              context: context,
-              keyboardType: TextInputType.text,
-              controller: tagController,
-              hintText: tr("tag"),
-              prefixIcon: InkWell(
-                child: Icon(Icons.add, size: 20),
-                onTap: inputTag,
-              ),
-              autoFocus: true,
-              onSubmitted: (value) {
-                inputTag();
-              },
-            ) : Buttons.primary(
-              text: tr("input_in_person"),
-              onPressed: () {
-                tagController.clear();
-                setState(() {
-                  inputActive = true;
-                });
-              },
-            ),
+            AddChipButton(buttonText: tr('add'), hintText: tr('tag'), onSubmit: inputTag),
             _buildInfoTitle(context, tr('ideal')),
             Chips.basic(
               context: context,
@@ -290,29 +266,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               selectedTags: [],
               onSelected: (String tag, bool selected) {}
             ),
-            inputActive ? 
-            TextFields.basic(
-              context: context,
-              keyboardType: TextInputType.text,
-              controller: tagController,
-              hintText: tr("tag"),
-              prefixIcon: InkWell(
-                child: Icon(Icons.add, size: 20),
-                onTap: inputTag,
-              ),
-              autoFocus: true,
-              onSubmitted: (value) {
-                inputTag();
-              },
-            ) : Buttons.primary(
-              text: tr("input_in_person"),
-              onPressed: () {
-                tagController.clear();
-                setState(() {
-                  inputActive = true;
-                });
-              },
-            ),
+            AddChipButton(buttonText: tr('add'), hintText: tr('tag'), onSubmit: inputTag),
             _buildInfoTitle(context, tr('hobbies')),
             Chips.basic(
               context: context,
@@ -320,29 +274,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               selectedTags: [],
               onSelected: (String tag, bool selected) {}
             ),
-            inputActive ? 
-            TextFields.basic(
-              context: context,
-              keyboardType: TextInputType.text,
-              controller: tagController,
-              hintText: tr("tag"),
-              prefixIcon: InkWell(
-                child: Icon(Icons.add, size: 20),
-                onTap: inputTag,
-              ),
-              autoFocus: true,
-              onSubmitted: (value) {
-                inputTag();
-              },
-            ) : Buttons.primary(
-              text: tr("input_in_person"),
-              onPressed: () {
-                tagController.clear();
-                setState(() {
-                  inputActive = true;
-                });
-              },
-            ),
+            AddChipButton(buttonText: tr('add'), hintText: tr('tag'), onSubmit: inputTag),
             SizedBox(height: 260)
           ]
         )

@@ -121,7 +121,8 @@
   "personality": "성격",
   "dating_style": "연애 스타일",
   "complete": "완료",
-  "add": "추가",
+  "addition": "추가",
+  "add": "추가 하기",
   "tag": "태그",
   "tag_list": {
     "charming_point": [
