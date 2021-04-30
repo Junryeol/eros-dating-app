@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/app_bars.dart';
+import 'package:eros/widgets/components/bottom_tab_bar.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/pages/home/choice_page.dart';
 import 'package:eros/widgets/pages/home/daily_recommendation_page.dart';
@@ -69,37 +70,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _currentPage,
       // BottomNavigationBar로는 디자인대로 구현 불가능 (가장 큰 이유는 배경색 변경)
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomTabBar(
+        data: _tabList, 
         currentIndex: _tabIndex,
         onTap: onTapTab,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed, // 4개 이상이면 어쩔 수 없음. shifting은 label색을 무조건 white로 바꿈
-        selectedFontSize: 10,
-        selectedLabelStyle: TextStyle(color: Skin.primary),
-        unselectedFontSize: 10,
-        unselectedLabelStyle: TextStyle(color: Skin.unselectedText),
-        items: _tabList.asMap().map((i, e) => MapEntry(i, _buildBottomBarItem(e['icon'], e['label'], i))).values.toList()
       )
-    );
-  }
-
-  BottomNavigationBarItem _buildBottomBarItem(IconData icon, String label, int index) {
-    bool isCurrent = _tabIndex == index;
-    return BottomNavigationBarItem(
-      icon: Container(
-        width: double.infinity,
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Icon(icon, size: 28, color: isCurrent ? Skin.primary : Skin.unselectedText),
-              SizedBox(height: 3)
-            ],
-          )
-        )
-      ),
-      label: label,
-      // backgroundColor: isCurrent ? Skin.white : Skin.unselected
     );
   }
 }
