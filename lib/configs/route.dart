@@ -2,7 +2,7 @@
 import 'package:eros/widgets/pages/account/find_email_page.dart';
 import 'package:eros/widgets/pages/account/reset_password_page.dart';
 import 'package:eros/widgets/pages/account/terms_detail_page.dart';
-import 'package:eros/widgets/pages/home/home_page.dart';
+import 'package:eros/widgets/pages/home/home_screen.dart';
 import 'package:eros/widgets/pages/index_page.dart';
 import 'package:eros/widgets/pages/profile/profile_edit_page.dart';
 import 'package:eros/widgets/pages/profile/profile_image_guide_page.dart';
@@ -21,7 +21,7 @@ class RoutePath {
   static routes(context){
     return {
       '/test': (context) => TestPage(),
-      '/home': (context) => HomePage(),
+      '/home': (context) => HomeScreen(),
       '/image_crop': (context) => ImageCropPage(),
       '/intro': (context) => IntroPage(),
       '/error': (context) => ErrorPage(),

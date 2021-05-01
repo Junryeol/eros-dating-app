@@ -127,6 +127,8 @@
   "single_playground": "싱글 놀이터",
   "complete": "완료",
   "addition": "추가",
+  "until_next_introduction": "다음 소개까지",
+  "introduced_immediately": "즉시 소개 받기",
   "add": "추가 하기",
   "tag": "태그",
   "tag_list": {

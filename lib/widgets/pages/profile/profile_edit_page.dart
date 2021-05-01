@@ -331,8 +331,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   Widget buildImageSet(List<String> images) {
-    return LayoutBuilder(builder: (BuildContext b_context, BoxConstraints b_constraints) {
-      double width = b_constraints.maxWidth;
+    return LayoutBuilder(builder: (BuildContext _context, BoxConstraints _constraints) {
+      double width = _constraints.maxWidth;
       double marginWidth = 15.0;
       double widthMain = width*2/3-marginWidth/2;
       double widthSub = widthMain/2-marginWidth/2;

@@ -16,14 +16,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/providers/auth.dart';
 import 'package:eros/widgets/components/buttons.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   List<StatefulWidget> _pages; 
   List<Map<String, dynamic>> _tabList;
   int _tabIndex;
