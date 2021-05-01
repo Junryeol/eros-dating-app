@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     StatefulWidget _currentPage = _pages[_tabIndex];
     
-    return Scaffolds.scroll(
+    return Scaffolds.basic(
       appBar: AppBars.basic(
         context: context,
         title: _tabList[_tabIndex]['label'],

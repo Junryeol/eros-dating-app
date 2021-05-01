@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
@@ -13,27 +15,50 @@ class DailyRecommendatonPage extends StatefulWidget {
 
 class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
 
-  List<String> imagePaths;
-  String date, time;
-
+  List<List<String>> imagePaths;
+  List<String> dates;
+  String time;
 
   @override
   void initState() {
     super.initState();
-    imagePaths = []..length = 6;
-    date = "2021/02/21 (일)";
+    imagePaths = List.filled(2, []..length=6);
+    dates = List.generate(2, (index) => "2021/02/${21-index} (일)");
     time = "23:59:59";
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 36.0),
-      child: Column(
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      child: ListView.separated(
+        itemCount: imagePaths.toList().length,
+        itemBuilder: (BuildContext context, int index) {
+          return buildRecommendation(date: dates[index], images: imagePaths[index]);
+        }, 
+        separatorBuilder: (BuildContext context, int index) {
+          return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+            return Images.basic(
+              context: context,
+              width: constraints.maxWidth,
+              height: constraints.maxWidth*11/35,
+              path: 'assets/images/pick.png',
+            );
+          });
+        }
+      ),
+    );
+  }
+
+  Widget buildRecommendation({@required String date, @required List<String> images}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 36.0),
+      child:  Column(
         children: [
           Row(
             children: [
               buildDateWidget(date),
+              // TODO: date가 오늘이면 보여줌
               Expanded(child: Container(
                 alignment: Alignment.centerRight, 
                 child: Text(
@@ -44,26 +69,11 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
             ],
           ),
           SizedBox(height: 12),
-          buildImageSet(imagePaths),
+          buildImageSet(images),
           SizedBox(height: 24),
-          Container(
-            height: 76,
-            child: Stack(
-              children: [
-                Positioned(right: 12, child: buildButtonBadge()),
-                Container(
-                  margin: const EdgeInsets.only(top: 12),
-                  child: Buttons.primary(
-                    context: context,
-                    text: tr("introduced_immediately"),
-                    onPressed: () {}
-                  )
-                )
-              ],
-            )
-          ),
+          buildButtonWithBadge(badge: buildBadge()),
         ]
-      ),
+      )
     );
   }
 
@@ -103,9 +113,9 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
             crossAxisSpacing: 24.0,
             crossAxisCount: 2,
             shrinkWrap: true,
-            children: imagePaths.sublist(2).map((e) => buildImageWithProfile(
+            children: images.sublist(2).map((e) => buildImageWithProfile(
               imagePath: e, 
-              size: 14.0
+              size: 12.0
             )).toList(),
           ))
         ]
@@ -120,7 +130,7 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
     String profileName="이름은최대열글자까지",
     String profileLocation="서울",
     double profileHeight=173.0,
-    double size=24.0
+    double size=22.0
     }) {
     return Images.basic(
       context: context,
@@ -170,7 +180,7 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
     );
   }
 
-  Widget buildButtonBadge() {
+  Widget buildBadge() {
     return Container(
       width: 89,
       height: 24,
@@ -206,6 +216,27 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
             "소요",
             style: const TextStyle(color: const Color(0xff9a9297), fontSize: 12.0),
             textAlign: TextAlign.left                
+          )
+        ],
+      )
+    );
+  }
+
+  Widget buildButtonWithBadge({@required Container badge, double buttonHeight=64.0, Function onPress}) {
+    double badgeHeight = badge.constraints.maxHeight/2;
+    return Container(
+      height: buttonHeight+badgeHeight,
+      child: Stack(
+        children: [
+          Positioned(right: badgeHeight, child: badge),
+          Container(
+            margin: EdgeInsets.only(top: badgeHeight),
+            child: Buttons.primary(
+              context: context,
+              text: tr("introduced_immediately"),
+              onPressed: onPress ?? () {},
+              fontSize: 20.0
+            )
           )
         ],
       )
