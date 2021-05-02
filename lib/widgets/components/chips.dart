@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Chips {
@@ -14,14 +15,15 @@ class Chips {
   }
 
   static _getChip(tag, selectedTags, onSelected, fontSize, fontWeight) {
-    return FilterChip(
+    return ChoiceChip(
         selected: selectedTags.contains(tag),
-        selectedColor: Colors.blue.shade800,
-        disabledColor: Colors.blue.shade400,
+        selectedColor: Color(0xfff2708f),
+        disabledColor:Color(0xffd8d2d2),
         onSelected: (bool selected) {
           onSelected(tag, selected);
         },
-        labelStyle: TextStyle(color: Colors.white, fontSize: fontSize, fontWeight: fontWeight),
+        avatar:null,
+        labelStyle: TextStyle(color: Color(0xff706569), fontSize: fontSize, fontWeight: fontWeight),
         label: Text(tag));
   }
 }

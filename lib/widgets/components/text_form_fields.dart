@@ -53,6 +53,7 @@ class TextFormFields {
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               hintText: hintText,
+              hintStyle: TextStyle(color: Color(0xffd8d2d2)),
               alignLabelWithHint: true,
               errorStyle: TextStyle(
                 color: Color(0xfff2708f)

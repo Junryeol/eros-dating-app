@@ -18,6 +18,7 @@ class TextFields {
         border: OutlineInputBorder(),
         prefixIcon: prefixIcon,
         hintText: hintText,
+        hintStyle: TextStyle(color:  Color(0xffd8d2d2))
       ),
       focusNode: focusNode,
       autofocus: autoFocus,
