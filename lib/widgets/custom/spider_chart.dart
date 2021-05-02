@@ -51,8 +51,12 @@ class SpiderChartPainter extends CustomPainter {
 
   final Paint spokes = Paint()..color = Colors.grey;
 
-  final Paint fill = Paint()
-    ..color = Color.fromARGB(15, 50, 50, 50)
+  final Paint fill1 = Paint()
+    ..color = Color.fromARGB(179, 152, 131, 225)
+    ..style = PaintingStyle.fill;
+
+  final Paint fill2 = Paint()
+    ..color = Color.fromARGB(179, 255, 175, 207)
     ..style = PaintingStyle.fill;
 
   final Paint stroke = Paint()
@@ -94,13 +98,16 @@ class SpiderChartPainter extends CustomPainter {
         dataPoints.add(Offset(x, y) + center);
       }
 
-      paintDataLines(canvas, dataPoints);
+      if (j % 2 == 0)
+        paintDataLines(canvas, dataPoints, fill1);
+      else
+        paintDataLines(canvas, dataPoints, fill2);
       // paintDataPoints(canvas, dataPoints);
       // paintText(canvas, center, dataPoints, data);
     }
   }
 
-  void paintDataLines(Canvas canvas, List<Offset> points) {
+  void paintDataLines(Canvas canvas, List<Offset> points, Paint fill) {
     Path path = Path()..addPolygon(points, true);
 
     canvas.drawPath(
@@ -108,7 +115,7 @@ class SpiderChartPainter extends CustomPainter {
       fill,
     );
 
-    canvas.drawPath(path, stroke);
+    // canvas.drawPath(path, stroke);
   }
 
   void paintDataPoints(Canvas canvas, List<Offset> points) {
