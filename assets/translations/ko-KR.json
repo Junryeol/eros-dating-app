@@ -130,6 +130,7 @@
   "until_next_introduction": "다음 소개까지",
   "introduced_immediately": "즉시 소개 받기",
   "empty_message_guide": "진행 중인 대화가 없어요\n마음에 드는 이성에게 마음을 표현해보세요",
+  "disconnected_message": "연결이 해제되었습니다.",
   "add": "추가 하기",
   "tag": "태그",
   "tag_list": {

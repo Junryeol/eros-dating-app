@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/text_fields.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +16,14 @@ class AddChipButton extends StatefulWidget {
 }
 
 class _AddChipButtonState extends State<AddChipButton> {
-  TextEditingController controller = TextEditingController();
-  bool inputActive = false;
+  TextEditingController controller;
+  bool inputActive;
 
-  void onSubmitted() {
-    setState((){ inputActive = false; });
-    widget.onSubmit(controller.text.trim());
-    controller.clear();
+  @override
+  void initState() { 
+    super.initState();
+    controller = TextEditingController();
+    inputActive = false;
   }
 
   @override
@@ -33,6 +31,12 @@ class _AddChipButtonState extends State<AddChipButton> {
     controller.dispose();
     
     super.dispose();
+  }
+
+  void onSubmitted() {
+    setState((){ inputActive = false; });
+    widget.onSubmit(controller.text.trim());
+    controller.clear();
   }
 
   @override
