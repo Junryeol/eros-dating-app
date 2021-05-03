@@ -24,8 +24,8 @@ class BottomTabBar extends StatelessWidget {
     return Row(
       // asMap() & MapEntry => for using index in map()
       children: data.asMap().map((i, e) {
-        if (!e.containsKey('icon')) { throw FormatException("[data] parameter must have 'icon' key"); }
-        else if(!e.containsKey('label')) { throw FormatException("[data] parameter must have 'label' key"); }
+        if (!e.containsKey('icon')) { throw FormatException("[data] parameter must contain 'icon' key"); }
+        else if(!e.containsKey('label')) { throw FormatException("[data] parameter must contain 'label' key"); }
         else { return MapEntry(i, Expanded(child: buildTabBarItem(i, e['icon'], e['label']))); }
       }).values.toList(),
     );

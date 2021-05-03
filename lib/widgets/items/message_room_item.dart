@@ -51,18 +51,17 @@ class MessageRoomItem extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Texts.basic(
                       context: context,
                       text: name,
                       fontSize: 18.0,
-                      textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: 11),
                     Text(
                       active ? lastChat : tr("disconnected_message"),
-                      style:  TextStyle(color: Skin.bordergrey, fontSize: 13.0),
-                      textAlign: TextAlign.left,
+                      style: TextStyle(color: Skin.bordergrey, fontSize: 13.0),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     )

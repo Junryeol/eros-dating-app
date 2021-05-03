@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
+import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/dividers.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:eros/widgets/items/message_room_item.dart';
+import 'package:eros/widgets/pages/home/message_room_page.dart';
 import 'package:flutter/material.dart';
 
 class MessagePage extends StatefulWidget {
@@ -39,13 +41,76 @@ class _MessagePageState extends State<MessagePage> {
     });
   }
 
-  Function onPressRoom(String name) {
-    // TODO: 채팅방 화면으로 navigate
-    return () {log("onPressRoom");};
+  void deleteChatRoom(int index) {
+    setState((){ roomList = List.from(roomList)..removeAt(index); });
   }
 
-  Function onLongPressRoom(String name) {
-    return () {log("onLongPressRoom");};
+  void disconnectChatRoom(int index) {
+    setState((){ roomList[index]['connected'] = false; });
+  }
+
+  Function onPressRoom(int index) {
+    // TODO: 채팅방 화면으로 navigate
+    return () { 
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MessageRoomPage(
+            name: roomList[index]['name'],
+            disconnect: () => disconnectChatRoom(index)
+          )
+        )
+      ); 
+    };
+  }
+
+  Function onLongPressRoom(int index) {
+    List<Widget> contents = roomList[index]['connected'] ? [
+      Container(
+        alignment: Alignment.centerLeft,
+        height: 30,
+        child: Text(
+          tr("disconnect"),
+          style: TextStyle(color: Skin.black, fontSize: 20.0),            
+        )
+      ),
+      Container(
+        alignment: Alignment.centerLeft,
+        height: 30,
+        child: Text(
+          tr("report"),
+          style: TextStyle(color: Skin.lightgrey, fontSize: 20.0),            
+        )
+      )
+    ] : [
+      Container(
+        alignment: Alignment.centerLeft,
+        height: 30,
+        child: Text(
+          tr("delete"),
+          style: TextStyle(color: Skin.black, fontSize: 20.0),            
+        )
+      )
+    ];
+    List<Function> events = roomList[index]['connected'] ? [
+      () => disconnectChatRoom(index),
+      () => log("Reported ${roomList[index]['name']}")
+    ] : [ 
+      () => deleteChatRoom(index)
+    ];
+    return () {
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          return Dialogs.option(
+            context: context,
+            length: contents.length,
+            itemBuilder: (int index) => contents[index],
+            onPressItem: (int index) => events[index](),
+          );
+        }
+      );
+    };
   }
 
   @override
@@ -100,8 +165,8 @@ class _MessagePageState extends State<MessagePage> {
           lastChat: roomList[index]['lastChat'],
           lastTime: roomList[index]['lastTime'],
           newCount: roomList[index]['newCount'],
-          onPress: onPressRoom(roomList[index]['name']),
-          onLongPress: onLongPressRoom(roomList[index]['name']),
+          onPress: onPressRoom(index),
+          onLongPress: onLongPressRoom(index),
         );
       }, 
       separatorBuilder: (BuildContext context, int index) {
