@@ -13,6 +13,9 @@ class Skin {
   static final unselected = Color(0xfff6f6f6);
   static final unselectedText = Color(0xffb2adad);
   static final shadow = Color(0x33ab4960);
+  static final chatText = Color(0xff595959);
+  static final bubbleLeft = Color(0xfffffcf3);
+  static final bubbleRight = Color(0xfffff3f6);
 
   static ThemeData light() {
     var brightness = Brightness.light;
