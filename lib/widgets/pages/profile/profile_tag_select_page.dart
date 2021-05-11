@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/widgets/components/add_chip_button.dart';
 import 'package:eros/widgets/components/chips.dart';
 import 'package:eros/widgets/components/text_fields.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
@@ -24,41 +25,32 @@ class ProfileTagSelectPage extends StatefulWidget {
 }
 
 class _ProfileTagSelectPageState extends State<ProfileTagSelectPage> {
-  TextEditingController tagController = TextEditingController();
-
+  List<String> tags;
   List<String> selectedTags = [];
-  bool inputActive = false;
-
+  
   @override
   void initState() {
     super.initState();
-    
-    tagController.addListener(()=>{});
+    tags = widget.tags;
   }
 
   @override
   void dispose() {
-    tagController.dispose();
-
     super.dispose();
   }
 
-  void inputTag() {
-    var value = tagController.text;
-    if (value.trim().length > 0) {
-      widget.tags.insert(0, value);
-      selectTag(value);
+  void inputTag(String tag) {
+    if (tag.length > 0) {
+      setState(() { tags = [tag, ...tags]; });
+      selectTag(tag);
     }
-    setState(() {
-      inputActive = false;
-    });
   }
 
-  void selectTag(String value) {
+  void selectTag(String tag) {
     if (selectedTags.length >= 10) {
       Toasts.basicShow(context: context, text: tr("tag_select_limit"));
     } else {
-      selectedTags.add(value);
+      setState(() { selectedTags = [...selectedTags, tag]; });
     }
   }
   void removeTag(String value) {
@@ -70,11 +62,6 @@ class _ProfileTagSelectPageState extends State<ProfileTagSelectPage> {
   }
 
   void nextPage() {
-    tagController.clear();
-    setState(() {
-      inputActive = false;
-    });
-
     // TODO: selectedTags 저장
 
     widget.finish();
@@ -88,78 +75,58 @@ class _ProfileTagSelectPageState extends State<ProfileTagSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 32.0, right: 32.0),
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 48),
-          Texts.basic(
-            context: context,
-            height: 26,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            text: tr(widget.id),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 12),
-          Texts.secondary(
-            context: context,
-            height: 40,
-            fontSize: 14,
-            fontWeight: FontWeight.w300,
-            text: tr(widget.id+"_message"),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 48),
-          inputActive ? 
-            TextFields.basic(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(left: 32.0, right: 32.0),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 48),
+            Texts.basic(
               context: context,
-              keyboardType: TextInputType.text,
-              controller: tagController,
-              hintText: tr("tag"),
-              prefixIcon: InkWell(
-                child: Icon(Icons.add, size: 20),
-                onTap: inputTag,
-              ),
-              autoFocus: true,
-              onSubmitted: (value) {
-                inputTag();
-              },
-            ) : Buttons.primary(
-              text: tr("input_in_person"),
-              onPressed: () {
-                tagController.clear();
+              height: 26,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              text: tr(widget.id),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 12),
+            Texts.secondary(
+              context: context,
+              height: 40,
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
+              text: tr(widget.id+"_message"),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 48),
+            AddChipButton(buttonText: tr('input_in_person'), hintText: tr('tag'), onSubmit: inputTag),
+            Chips.basic(
+              tags: tags,
+              selectedTags: selectedTags,
+              spacing: 5,
+              runSpacing: 6,
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+              onSelected: (tag, selected) {
                 setState(() {
-                  inputActive = true;
+                  if (selected){
+                    selectTag(tag);
+                  } else {
+                    removeTag(tag);
+                  }
                 });
               },
             ),
-          Chips.basic(
-            tags: widget.tags,
-            selectedTags: selectedTags,
-            spacing: 5,
-            runSpacing: 6,
-            fontSize: 12,
-            fontWeight: FontWeight.normal,
-            onSelected: (tag, selected) {
-              setState(() {
-                if (selected){
-                  selectTag(tag);
-                } else {
-                  removeTag(tag);
-                }
-              });
-            },
-          ),
-          SizedBox(height: 36),
-          Material(
-            child: Buttons.primary(
-              text: tr("next"),
-              active: selectedTags.length >= 3,
-              onPressed: nextPage,
-            )
-          ),
-        ],
+            SizedBox(height: 36),
+            Material(
+              child: Buttons.primary(
+                text: tr("next"),
+                active: selectedTags.length >= 3,
+                onPressed: nextPage,
+              )
+            ),
+          ],
+        )
       )
     );
   }

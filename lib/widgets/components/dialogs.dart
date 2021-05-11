@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -89,6 +91,35 @@ class Dialogs {
             onPressed: confirmOnPressed
         ),
       ],
+    );
+  }
+
+  static option({
+    BuildContext context, 
+    String title, 
+    int length, 
+    Widget Function(int) itemBuilder, 
+    Function(int) onPressItem
+  }) {
+    return SimpleDialog(
+      title: title != null ? Text(
+        title,
+        style: TextStyle(
+            color: Color(0xff252528),
+            fontSize: 20,
+            letterSpacing: 1.6,
+            fontWeight: FontWeight.w700
+        ),
+      ) : null,
+      children: Iterable<int>.generate(length).toList().map((i) {
+        return SimpleDialogOption(
+          child: itemBuilder(i),
+          onPressed: () {
+            onPressItem(i);
+            Navigator.of(context).pop();
+          } 
+        );
+      }).toList(),
     );
   }
 }

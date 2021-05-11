@@ -246,7 +246,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    log("Bool: $_isEmailEmpty $_isEmailValid $_isPasswordEmpty $_isPasswordValid $_isPasswordConfirmEmpty $_isPasswordMatch" );
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

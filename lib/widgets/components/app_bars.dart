@@ -7,6 +7,7 @@ class AppBars {
         icon: Icon(Icons.keyboard_arrow_left, color: Colors.black),
         onPressed: () => Navigator.of(context).pop(),
       ),
+      toolbarHeight: 48,
       centerTitle: true,
       title: Text(title, style: TextStyle(color: Color(0xff706569), fontSize: fontSize),),
       backgroundColor: Colors.white,
@@ -14,12 +15,13 @@ class AppBars {
     );
   }
 
-  static popup({BuildContext context, String title, @required double fontSize = 14.0}){
+  static popup({BuildContext context, String title, double fontSize = 14.0}){
     return AppBar(
       leading: IconButton(
         icon: Icon(Icons.close, color: Colors.black),
         onPressed: () => Navigator.of(context).pop(),
       ),
+      toolbarHeight: 48,
       centerTitle: true,
       title: Text(title, style: TextStyle(color: Color(0xff706569), fontSize: fontSize),),
       backgroundColor: Colors.white,
