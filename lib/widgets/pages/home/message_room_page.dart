@@ -49,6 +49,14 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
     controller.clear();
   }
 
+  String convertTimetoString(DateTime time) {
+    String hour = time.hour - 12 >= 0 ? 
+      '오후 ${(time.hour-12).toString().padLeft(2, '0')}' 
+      : '오전 ${time.hour.toString().padLeft(2, '0')}';
+    String minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffolds.basic(
@@ -91,10 +99,11 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
     log(index.toString() + chats.length.toString());
     bool isLast = index == 0 || chats[index-1].name != chats[index].name;
     bool isMine = chats[index].name == widget.username;
+    String strTime = convertTimetoString(chats[index].time);
     Widget timeWidget = Container(
       margin: EdgeInsets.only(top: 10.0, left: isMine ? 0 : 42.0, bottom: 36.0),
       child: Text(
-        chats[index].time.toString(),
+        strTime,
         style: TextStyle(fontSize: 9, height: 1.6, color: Skin.lightgrey),
       )
     );
