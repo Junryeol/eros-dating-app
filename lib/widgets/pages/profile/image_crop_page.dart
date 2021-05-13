@@ -35,54 +35,80 @@ class _ImageCropPageState extends State<ImageCropPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.black,
-              child: _buildCroppingImage(),
-            ),
-            Positioned(
-              right: 30, top: 30,
-              child: TextButton(
-                child: Text(
-                  tr('complete'),
-                  style: TextStyle(
-                    color: Skin.white,
-                    fontSize: 18
+        children: <Widget>[
+          Container(
+            color: Colors.black,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1.0, 
+                    child: Crop.file(_file, key: cropKey, aspectRatio: 1.0)
                   ),
-                ),
-                onPressed: () => Navigator.pop(context, _file),
+                  const SizedBox(height: 20),
+                  // MiniMap
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.file(widget.file, width: 100),
+                      Icon(Icons.arrow_right, color: Skin.white, size: 40,),
+                      Image.file(_file, width: 100),
+                    ],
+                  )
+                ],
               )
-            )
-          ]),
+            ),
+          ),
+          Positioned(
+            left:0, right: 0, bottom: 0,
+            child: Row(
+                children: <Widget>[
+                  const SizedBox(width: 50),
+                  Flexible(child: InkWell(
+                    child: Container(
+                      height: 80,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        '자르기',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20
+                        ),
+                      )
+                    ),
+                    onTap: () => _cropImage(),
+                  )),
+                  const SizedBox(width: 50),
+                  Flexible(child:InkWell(
+                    child: Container(
+                      height: 80,
+                      alignment: Alignment.center,
+                      child: Text(
+                        tr('complete'),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20
+                        ),
+                      )
+                    ),
+                    onTap: () => Navigator.pop(context, _file),
+                  )),
+                  const SizedBox(width: 50),
+                ],
+              ),
+          )
+          
+        ]
+      ),
     );
   }
 
-  Widget _buildCroppingImage() {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Crop.file(_file, key: cropKey),
-        ),
-        Container(
-          padding: const EdgeInsets.only(top: 20.0),
-          alignment: AlignmentDirectional.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              TextButton(
-                child: const Text(
-                  'Crop Image',
-                ),
-                onPressed: () => _cropImage(),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
 
   Future<void> _cropImage() async {
-    log('crop!');
+    final file = await ImageCrop.cropImage(file: _file, area: cropKey.currentState.area);
+    setState(() {
+      _file = file;
+    });
   }
 }
