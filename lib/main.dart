@@ -11,15 +11,19 @@ import 'package:eros/configs/route.dart';
 import 'package:eros/providers/auth.dart';
 
 void main() {
-  runApp(
-    EasyLocalization(
-      supportedLocales: I18n.locales,
-      path: I18n.path,
-      fallbackLocale: I18n.fallbackLocale,
-      saveLocale: false,
-      child: App()
-    )
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  EasyLocalization.ensureInitialized().then((value) {
+    runApp(
+      EasyLocalization(
+        supportedLocales: I18n.locales,
+        path: I18n.path,
+        fallbackLocale: I18n.fallbackLocale,
+        saveLocale: false,
+        child: App()
+      )
+    );
+  });
+  
 }
 
 class App extends StatelessWidget {
@@ -28,7 +32,7 @@ class App extends StatelessWidget {
     // 스플래시 화면 내 이미지 precache
     precacheImage(AssetImage('assets/images/logo_and_text.png'), context);
     precacheImage(AssetImage('assets/images/logo.png'), context);
-    
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Auth>(create: (_) => Auth()),

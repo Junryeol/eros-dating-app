@@ -48,11 +48,11 @@ class Rest {
     return data;
   }
 
-  String _url(path, params) {
+  Uri _url(path, params) {
     if (params == null){
-      return _PARSE_APP_URL + path;
+      return Uri(host: _PARSE_APP_URL + path);
     } else {
-      return _PARSE_APP_URL + path + '?' + Uri(queryParameters: params).query;
+      return Uri(host: _PARSE_APP_URL + path + '?' + Uri(queryParameters: params).query);
     }
   }
 
@@ -62,7 +62,7 @@ class Rest {
 
   Future<bool> health() async {
     Response response = await _http.get(
-      _PARSE_APP_URL + "/health",
+      Uri(host: _PARSE_APP_URL + "/health"),
       headers: _header(),
     );
     log(response.statusCode.toString());

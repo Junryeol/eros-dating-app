@@ -66,7 +66,7 @@ class _ImageCropPageState extends State<ImageCropPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text(
                   'Crop Image',
                   style: Theme.of(context)
@@ -85,7 +85,7 @@ class _ImageCropPageState extends State<ImageCropPage> {
   }
 
   Widget _buildOpenImage() {
-    return FlatButton(
+    return TextButton(
       child: Text(
         'Open Image',
         style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
@@ -95,9 +95,9 @@ class _ImageCropPageState extends State<ImageCropPage> {
   }
 
   Future<void> _openImage() async {
-    final file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final file = await ImagePicker().getImage(source: ImageSource.gallery);
     final sample = await ImageCrop.sampleImage(
-      file: file,
+      file: File(file.path),
       preferredSize: context.size.longestSide.ceil(),
     );
 
@@ -106,7 +106,7 @@ class _ImageCropPageState extends State<ImageCropPage> {
 
     setState(() {
       _sample = sample;
-      _file = file;
+      _file = File(file.path);
     });
   }
 
