@@ -85,9 +85,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     if (_image == null) return;
     final _imageFile = await Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => ImageCropPage(file: File(_image.path))));
-    setState(() {
-      imageList[idx] = _imageFile;
-    });
+    if (_imageFile != null) {
+      setState(() {
+        imageList[idx] = _imageFile;
+      });
+    }
   }
 
   void inputTag(String tag) {
