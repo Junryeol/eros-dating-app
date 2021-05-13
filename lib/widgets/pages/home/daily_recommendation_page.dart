@@ -38,7 +38,7 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
         }, 
         separatorBuilder: (BuildContext context, int index) {
           return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-            return Images.basic(
+            return Images.asset(
               context: context,
               width: constraints.maxWidth,
               height: constraints.maxWidth*11/35,
@@ -132,7 +132,7 @@ class _DailyRecommendatonPageState extends State<DailyRecommendatonPage> {
     double profileHeight=173.0,
     double size=22.0
     }) {
-    return Images.basic(
+    return Images.asset(
       context: context,
       width: width, height: width,
       path: imagePath,

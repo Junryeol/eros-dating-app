@@ -37,7 +37,7 @@ class MessageRoomItem extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             child: Row(     
               children: [
-                active ? Images.basic(
+                active ? Images.asset(
                   context: context,
                   width: 88, height: 88,
                   path: thumbnail,

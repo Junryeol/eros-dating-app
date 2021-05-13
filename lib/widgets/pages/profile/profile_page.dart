@@ -52,7 +52,7 @@ class ProfilePage extends StatelessWidget {
           // TODO: 이미지 넘기는 거 디자인 미정?
           AspectRatio(
             aspectRatio: 1.0,
-            child: Images.basic(
+            child: Images.asset(
               context: context,
               width: double.infinity,
               path: 'assets/images/profile_test.png'

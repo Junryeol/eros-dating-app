@@ -58,7 +58,7 @@ class ProfileImageGuidePage extends StatelessWidget {
   Widget imageWithMessage(BuildContext context, String id, {width=100}) {
     return Column(
       children: [
-        Images.basic(
+        Images.asset(
             context: context,
             width: width, height: width,
             borderRadius: 10.0,

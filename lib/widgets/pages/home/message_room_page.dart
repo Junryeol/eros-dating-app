@@ -125,7 +125,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        imagePath == null ? SizedBox(width: 30,) : Images.basic(
+        imagePath == null ? SizedBox(width: 30,) : Images.asset(
           width: 30, height: 30,
           borderRadius: 15,
           path: imagePath

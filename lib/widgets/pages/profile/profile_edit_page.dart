@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
@@ -13,7 +14,9 @@ import 'package:eros/widgets/components/text_fields.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:eros/widgets/components/toasts.dart';
+import 'package:eros/widgets/pages/profile/image_crop_page.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileEditPage extends StatefulWidget {
   ProfileEditPage({Key key}) : super(key: key);
@@ -48,7 +51,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   ];
   List<String> selectedTags = [];
 
-  List<String> imageList = ['assets/images/profile_test.png']..length = 6;
+  List<File> imageList = []..length = 6;
 
   Map<String, String> pickerText = {
     'gender': tr('female'),
@@ -77,13 +80,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     super.dispose();
   }
 
-  void onImageTap(int idx) {
+  void onImageTap(int idx) async {
+    var _image = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (_image == null) return;
+    final _imageFile = await Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => ImageCropPage(file: File(_image.path))));
     setState(() {
-      if (idx == imageList.length) {
-        imageList.add('image');
-      } else if (idx < imageList.length) {
-        imageList[idx] = 'image';
-      }
+      imageList[idx] = _imageFile;
     });
   }
 
@@ -283,54 +286,70 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     );
   }
 
+  Widget imageDecoration({
+    double width,
+    int index,
+    bool active
+  }) {
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          width: width*0.1+16, height: 20,
+          decoration: BoxDecoration(
+            color: Skin.bordergrey,
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
+          ),
+          child: Center(
+            child: Text(
+              index == 0 ? tr('represent') : (index+1).toString(),
+              style: TextStyle(
+                color: Skin.white,
+                fontSize: 10,
+                fontWeight: FontWeight.normal
+              )
+            )
+          ),
+        ),
+        active ? GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => onImageTap(index),
+          child: Container()
+        ) : Container(color: Skin.disabled),
+      ],
+    );
+  }
+
   Widget imageForUpload({
       int index=0,
       double width=228.0, 
       double height=228.0, 
       double borderRadius=10.0, 
-      String path,
+      File file,
       bool active=true
     }) {
-    return Images.basic(
+    if (file == null) {
+      return Images.asset(
+        context: context,
+        width: width, height: height,
+        borderRadius: borderRadius,
+        border: active ? Border.all(
+          color: Skin.bordergrey,
+          width: 1,
+        ) : null,
+        widget: imageDecoration(width: width, index: index, active: active)
+      );
+    }
+    return Images.file(
       context: context,
       width: width, height: height,
-      path: path,
+      file: file,
       borderRadius: borderRadius,
-      border: path == null && active ? Border.all(
-        color: Skin.bordergrey,
-        width: 1,
-      ) : null,
-      widget: Stack(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            width: width*0.1+16, height: 20,
-            decoration: BoxDecoration(
-              color: Skin.bordergrey,
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
-            ),
-            child: Center(
-              child: Text(
-                index == 0 ? tr('represent') : (index+1).toString(),
-                style: TextStyle(
-                  color: Skin.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.normal
-                )
-              )
-            ),
-          ),
-          active ? GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => onImageTap(index),
-            child: Container()
-          ) : Container(color: Skin.disabled),
-        ],
-      ),
+      widget: imageDecoration(width: width, index: index, active: active)
     );
   }
 
-  Widget buildImageSet(List<String> images) {
+  Widget buildImageSet(List<File> images) {
     return LayoutBuilder(builder: (BuildContext _context, BoxConstraints _constraints) {
       double width = _constraints.maxWidth;
       double marginWidth = 15.0;
@@ -340,13 +359,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         children: [
           Row(
             children: [
-              imageForUpload(index: 0, width: widthMain,height: widthMain, path: images[0]),
+              imageForUpload(index: 0, width: widthMain,height: widthMain, file: images[0]),
               SizedBox(width: marginWidth),
               Column(
                 children: [
-                  imageForUpload(index: 1, width: widthSub, height: widthSub, path: images[1], active: images[0] != null),
+                  imageForUpload(index: 1, width: widthSub, height: widthSub, file: images[1], active: images[0] != null),
                   SizedBox(height: marginWidth),
-                  imageForUpload(index: 2, width: widthSub, height: widthSub, path: images[2], active: images[1] != null),
+                  imageForUpload(index: 2, width: widthSub, height: widthSub, file: images[2], active: images[1] != null),
                 ]
               )
             ],
@@ -354,11 +373,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           SizedBox(height: 15),
           Row(
             children: [
-              imageForUpload(index: 3, width: widthSub, height: widthSub, path: images[3], active: images[2] != null),
+              imageForUpload(index: 3, width: widthSub, height: widthSub, file: images[3], active: images[2] != null),
               SizedBox(width: marginWidth),
-              imageForUpload(index: 4, width: widthSub, height: widthSub, path: images[4], active: images[3] != null),
+              imageForUpload(index: 4, width: widthSub, height: widthSub, file: images[4], active: images[3] != null),
               SizedBox(width: marginWidth),
-              imageForUpload(index: 5, width: widthSub, height: widthSub, path: images[5], active: images[4] != null),
+              imageForUpload(index: 5, width: widthSub, height: widthSub, file: images[5], active: images[4] != null),
             ]
           )
         ]

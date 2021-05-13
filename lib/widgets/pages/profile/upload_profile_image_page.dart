@@ -97,7 +97,7 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
       String path,
       bool active=true
     }) {
-    return Images.basic(
+    return Images.asset(
       context: context,
       width: width, height: height,
       path: path,

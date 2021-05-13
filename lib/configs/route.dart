@@ -22,7 +22,6 @@ class RoutePath {
     return {
       '/test': (context) => TestPage(),
       '/home': (context) => HomeScreen(),
-      '/image_crop': (context) => ImageCropPage(),
       '/intro': (context) => IntroPage(),
       '/error': (context) => ErrorPage(),
       '/sign_up': (context) => SignUpPage(),

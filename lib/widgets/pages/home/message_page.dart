@@ -136,7 +136,7 @@ class _MessagePageState extends State<MessagePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Images.basic(
+          Images.asset(
             context: context,
             width: 210, height: 210,
             path: 'assets/images/empty_message.png'
