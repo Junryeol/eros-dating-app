@@ -134,6 +134,10 @@
   "disconnect": "연결 해제",
   "report": "신고",
   "delete": "삭제",
+  "request_received": "받은 요청",
+  "request_sent": "보낸 요청",
+  "request_before": "요청 확인 전",
+  "request_after": "요청 확인 후",
   "add": "추가 하기",
   "tag": "태그",
   "tag_list": {

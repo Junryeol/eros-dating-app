@@ -1,3 +1,4 @@
+import 'package:eros/configs/skin.dart';
 import 'package:flutter/material.dart';
 
 class Buttons {
@@ -59,6 +60,33 @@ class Buttons {
         child: widget,
         onPressed: onPressed,
       ),
+    );
+  }
+
+  static onoff({BuildContext context, double width=double.infinity, double height=40.0, String text, bool selected=false, Function onPressed}) {
+    return GestureDetector(
+      child: Container(
+        width: width,
+        height: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: selected ? Skin.primary : Skin.white,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          border: selected ? null : Border.all(color: Skin.primary, width: 1)
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: selected ? Skin.white : Skin.primary,
+            fontSize: 14.0,
+            height: 16/14,
+            letterSpacing: 0.56,
+            fontWeight: FontWeight.w700 
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      onTap: onPressed,
     );
   }
 
