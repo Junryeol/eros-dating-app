@@ -5,8 +5,10 @@ import 'package:eros/configs/skin.dart';
 import 'package:eros/providers/auth.dart';
 import 'package:eros/utils/valid.dart';
 import 'package:eros/widgets/components/buttons.dart';
+import 'package:eros/widgets/components/dividers.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_form_fields.dart';
+import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -190,30 +192,25 @@ class _SignInPageState extends State<SignInPage> {
               active: !_isEmailEmpty & !_isPasswordEmpty,
               onPressed: _signIn
             ),
-            Container(
-              margin: EdgeInsets.only(top: 27),
+            SizedBox(height: 27),
+            Texts.secondary(
+              context: context,
+              fontSize: 12,
               height: 13,
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    tr('sign_up_question'),
-                    style: TextStyle(fontSize: 12),
-                  ),
-              )
+              textAlign: TextAlign.center,
+              text: tr('sign_up_question')
             ),
-            Container(
-                margin: EdgeInsets.only(top: 6),
+            SizedBox(height: 6),
+            InkWell(
+              child: Texts.basic(
+                context: context,
                 height: 16,
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Buttons.transparency(
-                    context: context,
-                    // 왜 안뜨지...;;
-                    text: tr('sign_up'),
-                    onPressed: ()=>{Navigator.pushNamed(context, "/sign_up")},
-                    //style: TextStyle(fontSize: 14),
-                  ),
-              )
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+                text: tr('sign_up'),
+              ),
+              onTap: ()=>{Navigator.pushNamed(context, "/sign_up")},
             ),
             Expanded(
               child: Align(
@@ -224,13 +221,21 @@ class _SignInPageState extends State<SignInPage> {
                   children: <Widget> [
                     Buttons.transparency(
                       context: context,
+                      height: 13,
                       text: tr('email_find'),
+                      fontSize: 12,
                       onPressed: () => Navigator.pushNamed(context, "/find_email"),
                     ),
-                    Divider(), // TODO: 컴포넌트 완성되면 대체
+                    Container(
+                      width: 32,
+                      height: 24,
+                      child: Dividers.vertical(thickness: 1)
+                    ),
                     Buttons.transparency(
                       context: context,
+                      height: 13,
                       text: tr('password_find'),
+                      fontSize: 12,
                       onPressed: () => Navigator.pushNamed(context, "/reset_password"),
                     )
                   ],

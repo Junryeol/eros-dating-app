@@ -27,9 +27,13 @@ class Buttons {
     );
   }
 
-  static transparency({BuildContext context, String text, Function onPressed, double fontSize = 14.0, fontWeight = FontWeight.w300}){
+  static transparency({BuildContext context, String text, Function onPressed, double height=64.0, double fontSize = 14.0, fontWeight = FontWeight.w300}){
     return Ink(
+      height: height,
       child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
         child: Container(
           child: Text(text, style: TextStyle(color: Color(0xffd8d2d2), fontSize: fontSize, fontWeight: fontWeight,)),
         ),

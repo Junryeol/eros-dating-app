@@ -21,6 +21,7 @@ class _IndexPageState extends State<IndexPage> {
       widgets.add(Container(
         width: double.infinity,
         child: Buttons.transparency(
+          height: 30,
           text: k,
           onPressed: () {
             Navigator.pushNamed(context, k);

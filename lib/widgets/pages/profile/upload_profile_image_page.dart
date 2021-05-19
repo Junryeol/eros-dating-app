@@ -18,7 +18,7 @@ class UploadProfileImagePage extends StatefulWidget {
 
 class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
   
-  List<String> _imageList = [];
+  List<String> _imageList = []..length = 6;
 
   void nextPage() {
     // TODO: 프로필 사진 승인 요청
@@ -51,7 +51,7 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
               height: 12,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(192) 
+                  Radius.circular(6) 
                 ),
                 color: Skin.bordergrey,
               ),
@@ -80,7 +80,6 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
   }
 
   void onImageTap(int idx) {
-    log("Image [$idx] tapped!");
     setState(() {
       if (idx == _imageList.length) {
         _imageList.add('image');
@@ -95,11 +94,13 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
       double width=228.0, 
       double height=228.0, 
       double borderRadius=10.0, 
+      String path,
       bool active=true
     }) {
     return Images.basic(
       context: context,
       width: width, height: height,
+      path: path,
       borderRadius: borderRadius,
       border: active ? Border.all(
         color: Skin.bordergrey,
@@ -136,8 +137,8 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
   }
 
   Widget buildImageSet(List<String> images) {
-    return LayoutBuilder(builder: (BuildContext b_context, BoxConstraints b_constraints) {
-      double width = b_constraints.maxWidth;
+    return LayoutBuilder(builder: (BuildContext _context, BoxConstraints _constraints) {
+      double width = _constraints.maxWidth;
       double marginWidth = 15.0;
       double widthMain = width*2/3-marginWidth/2;
       double widthSub = widthMain/2-marginWidth/2;
@@ -145,13 +146,13 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
         children: [
           Row(
             children: [
-              imageForUpload(index: 0, width: widthMain,height: widthMain),
+              imageForUpload(index: 0, width: widthMain,height: widthMain, path: images[0], ),
               SizedBox(width: marginWidth),
               Column(
                 children: [
-                  imageForUpload(index: 1, width: widthSub, height: widthSub, active: images.length>0),
+                  imageForUpload(index: 1, width: widthSub, height: widthSub, path: images[1], active: images[0] != null),
                   SizedBox(height: marginWidth),
-                  imageForUpload(index: 2, width: widthSub, height: widthSub, active: images.length>1),
+                  imageForUpload(index: 2, width: widthSub, height: widthSub, path: images[2], active: images[1] != null),
                 ]
               )
             ],
@@ -159,11 +160,11 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
           SizedBox(height: 15),
           Row(
             children: [
-              imageForUpload(index: 3, width: widthSub, height: widthSub, active: images.length>2),
+              imageForUpload(index: 3, width: widthSub, height: widthSub, path: images[3], active: images[2] != null),
               SizedBox(width: marginWidth),
-              imageForUpload(index: 4, width: widthSub, height: widthSub, active: images.length>3),
+              imageForUpload(index: 4, width: widthSub, height: widthSub, path: images[4], active: images[3] != null),
               SizedBox(width: marginWidth),
-              imageForUpload(index: 5, width: widthSub, height: widthSub, active: images.length>4),
+              imageForUpload(index: 5, width: widthSub, height: widthSub, path: images[5], active: images[4] != null),
             ]
           )
         ]
@@ -173,7 +174,6 @@ class _UploadProfileImagePageState extends State<UploadProfileImagePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(_imageList.toString());
     return Padding(
       padding: EdgeInsets.only(left: 32, right: 32),
       child: Column(
