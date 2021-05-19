@@ -16,6 +16,8 @@ class _TestPageState extends State<TestPage> {
       body: Center(
         child: Column(
           children: [
+            SizedBox(height: 82),
+
         Container(
           width: 200,
           height: 200,
