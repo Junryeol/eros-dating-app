@@ -57,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
     StatefulWidget _currentPage = _pages[_tabIndex];
     
     return Scaffolds.basic(
-      appBar: AppBars.basic(
+      appBar: AppBars.home(
         context: context,
         title: _tabList[_tabIndex]['label'],
-        fontSize: 16.0
+        token: 1110
       ),
       body: _currentPage,
       // BottomNavigationBar로는 디자인대로 구현 불가능 (가장 큰 이유는 배경색 변경)
