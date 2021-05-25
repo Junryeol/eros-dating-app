@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/chips.dart';
+import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +19,15 @@ class ProfileArgument {
 }
 
 class ProfilePage extends StatelessWidget {
+  String myID = "abc";
+
 
   @override
   Widget build(BuildContext context) {
 
     // TODO: 유저 데이터 ID? 받아오기
     // final ProfileArgument arg = ModalRoute.of(context).settings.arguments;
-
+    String userID = "abc2";
     String userName = "글자수는최대열자까지";
     int userAge = 27;
     String userLocation = "서울";
@@ -41,11 +46,64 @@ class ProfilePage extends StatelessWidget {
       "몸매가 좋아요",
     ];
 
+    List<Widget> contents = [
+      Container(
+        alignment: Alignment.centerLeft,
+        height: 30,
+        child: Text(
+          tr("block"),
+          style: TextStyle(color: Skin.black, fontSize: 20.0),            
+        )
+      ),
+      Container(
+        alignment: Alignment.centerLeft,
+        height: 30,
+        child: Text(
+          tr("report"),
+          style: TextStyle(color: Skin.lightgrey, fontSize: 20.0),            
+        )
+      )
+    ];
+    List<Function> events = [
+      () =>showDialog(
+        context: context, 
+        builder: (context) {
+          return Dialogs.confirm(
+            context: context,
+            title: tr('block_do'),
+            content: tr('block_message'),
+            cancelOnPressed: () => Navigator.of(context).pop(),
+            confirmOnPressed: () => Navigator.of(context).pop()
+          );
+        }
+      ),
+      () => log("Reported $userName")
+    ];
+
     return Scaffolds.scroll(
       context: context,
       appBar: AppBars.basic(
         context: context,
-        title: ''
+        title: tr('profile'),
+        actions: myID != userID ? [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            color: Skin.grey, 
+            onPressed: () {
+              showDialog(
+                context: context, 
+                builder: (BuildContext context) {
+                  return Dialogs.option(
+                    context: context,
+                    length: contents.length,
+                    itemBuilder: (int index) => contents[index],
+                    onPressItem: (int index) => events[index](),
+                  );
+                },
+              );
+            }
+          )
+        ] : []
       ),
       body: Column(
         children: [

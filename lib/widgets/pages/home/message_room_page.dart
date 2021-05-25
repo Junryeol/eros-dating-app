@@ -5,7 +5,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
-import 'package:eros/utils/chat.dart';
+import 'package:eros/models/chat.dart';
 import 'package:eros/widgets/components/Images.dart';
 import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/scaffolds.dart';

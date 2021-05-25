@@ -115,11 +115,18 @@ class Dialogs {
         return SimpleDialogOption(
           child: itemBuilder(i),
           onPressed: () {
-            onPressItem(i);
             Navigator.of(context).pop();
+            onPressItem(i);
           } 
         );
       }).toList(),
+    );
+  }
+
+  static show({@required BuildContext context, Widget child}) {
+    showDialog(
+      context: context, 
+      builder: (BuildContext context) => child
     );
   }
 }
