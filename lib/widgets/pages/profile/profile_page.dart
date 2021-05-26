@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
 import 'package:eros/widgets/components/app_bars.dart';
+import 'package:eros/widgets/components/buttons.dart';
 import 'package:eros/widgets/components/chips.dart';
 import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
@@ -21,6 +22,20 @@ class ProfileArgument {
 class ProfilePage extends StatelessWidget {
   String myID = "abc";
 
+  void showBlockDialog(BuildContext context) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return Dialogs.confirm(
+          context: context,
+          title: tr('block_do'),
+          content: tr('block_message'),
+          cancelOnPressed: () => Navigator.of(context).pop(),
+          confirmOnPressed: () => Navigator.of(context).pop()
+        );
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +43,7 @@ class ProfilePage extends StatelessWidget {
     // TODO: 유저 데이터 ID? 받아오기
     // final ProfileArgument arg = ModalRoute.of(context).settings.arguments;
     String userID = "abc2";
+    bool liked = true, checked = false;
     String userName = "글자수는최대열자까지";
     int userAge = 27;
     String userLocation = "서울";
@@ -45,6 +61,21 @@ class ProfilePage extends StatelessWidget {
       "코가 오똑해요",
       "몸매가 좋아요",
     ];
+
+    String buttonText;
+    if (myID == userID) {
+      buttonText = tr('profile_edit');
+    } else {
+      if (!liked) {
+        buttonText = tr('like');
+      } else {
+        if (checked) {
+          buttonText = tr('chatting');
+        } else {
+          buttonText = tr('checking_like');
+        }
+      } 
+    }
 
     List<Widget> contents = [
       Container(
@@ -65,20 +96,10 @@ class ProfilePage extends StatelessWidget {
       )
     ];
     List<Function> events = [
-      () =>showDialog(
-        context: context, 
-        builder: (context) {
-          return Dialogs.confirm(
-            context: context,
-            title: tr('block_do'),
-            content: tr('block_message'),
-            cancelOnPressed: () => Navigator.of(context).pop(),
-            confirmOnPressed: () => Navigator.of(context).pop()
-          );
-        }
-      ),
+      () => showBlockDialog(context),
       () => log("Reported $userName")
     ];
+
 
     return Scaffolds.scroll(
       context: context,
@@ -104,6 +125,14 @@ class ProfilePage extends StatelessWidget {
             }
           )
         ] : []
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(16.0),
+        child: buildButtonWithBadge(
+          context: context, 
+          text: buttonText,
+          badge: buttonText == tr('like') ? buildBadge() : null,
+        ),
       ),
       body: Column(
         children: [
@@ -200,6 +229,69 @@ class ProfilePage extends StatelessWidget {
             )
           )
         ]
+      )
+    );
+  }
+
+  Widget buildButtonWithBadge({BuildContext context, String text, @required Container badge, double buttonHeight=64.0, Function onPress}) {
+    double badgeHeight = badge == null ? 0 : badge.constraints.maxHeight/2;
+    return Container(
+      height: buttonHeight+badgeHeight,
+      child: Stack(
+        children: [
+          Positioned(right: badgeHeight, child: badge ?? Container()),
+          Container(
+            margin: EdgeInsets.only(top: badgeHeight),
+            child: Buttons.primary(
+              context: context,
+              text: text,
+              onPressed: onPress ?? () {},
+              fontSize: 20.0
+            )
+          )
+        ],
+      )
+    );
+  }
+
+  Widget buildBadge() {
+    return Container(
+      width: 89,
+      height: 24,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        boxShadow: [
+          BoxShadow(
+              color: Skin.shadow,
+              offset: Offset(0,3),
+              blurRadius: 6,
+              spreadRadius: 0
+          )
+        ],
+        color: Skin.white
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image(image: AssetImage('assets/icons/token.png'), width: 18),
+          SizedBox(width: 4),
+          Text(
+            "20",
+            style: const TextStyle(
+                color: const Color(0xffd18c28),
+                fontWeight: FontWeight.w700,
+                fontSize: 12.0
+            ),
+            textAlign: TextAlign.center                
+          ),
+          SizedBox(width: 8),
+          Text(
+            "소요",
+            style: const TextStyle(color: const Color(0xff9a9297), fontSize: 12.0),
+            textAlign: TextAlign.left                
+          )
+        ],
       )
     );
   }
