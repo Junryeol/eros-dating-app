@@ -1,0 +1,23 @@
+post:
+  summary: 토큰 재발급
+  description: 리프레쉬 토큰으로 토큰 재발급
+  tags:
+    - account
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - refreshToken
+          properties:
+            refreshToken:
+              type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/account/token.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

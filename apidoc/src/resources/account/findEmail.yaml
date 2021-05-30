@@ -1,0 +1,20 @@
+post:
+  summary: 이메일 찾기
+  description: 문자로 이메일 보내는게 시스템적 오류로 실패할 경우만 실패하도록 (핸드폰 번호가 등록 안 되었다는 에러문구는 알려주면 안됨)
+  tags:
+    - account
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - phone
+          properties:
+            phone:
+              type: string
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

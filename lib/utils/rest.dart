@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:convert';
 
@@ -11,7 +12,7 @@ class Rest {
   final String _PARSE_APP_ID = 'APPLICATION_ID';
 
   // ignore: non_constant_identifier_names
-  final String _PARSE_APP_URL = 'https://192.168.0.6/parse';
+  final String _PARSE_APP_URL = 'https://localhost/api/parse';
   // final String _PARSE_APP_URL = 'http://192.168.0.6:1337/parse';
 
   IOClient _http;
@@ -47,11 +48,11 @@ class Rest {
     return data;
   }
 
-  String _url(path, params) {
+  Uri _url(path, params) {
     if (params == null){
-      return _PARSE_APP_URL + path;
+      return Uri(host: _PARSE_APP_URL + path);
     } else {
-      return _PARSE_APP_URL + path + '?' + Uri(queryParameters: params).query;
+      return Uri(host: _PARSE_APP_URL + path + '?' + Uri(queryParameters: params).query);
     }
   }
 
@@ -61,10 +62,10 @@ class Rest {
 
   Future<bool> health() async {
     Response response = await _http.get(
-      _PARSE_APP_URL + "/health",
+      Uri(host: _PARSE_APP_URL + "/health"),
       headers: _header(),
     );
-    print(response.statusCode);
+    log(response.statusCode.toString());
     if (response.statusCode < 300 && _json2object(response)['status'] == "ok"){
       return true;
     }

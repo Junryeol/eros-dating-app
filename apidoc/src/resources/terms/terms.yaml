@@ -1,0 +1,54 @@
+get:
+  summary: 약관 정보 요청
+  description: 쿼리 파라미터 기본값 lastest, ko-kr
+  tags:
+    - config
+  parameters:
+    - in: query
+      name: version
+      description: 약관 버전
+      required: false
+      schema:
+        type: string
+    - in: query
+      name: language
+      description: 언어
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/terms/terms.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
+put:
+  summary: 약관 추가 및 업데이트
+  description: 쿼리 파라미터 필수, 업데이트시 덮어쓰기 됨
+  tags:
+    - config
+  parameters:
+    - in: query
+      name: version
+      description: 약관 버전
+      required: true
+      schema:
+        type: string
+    - in: query
+      name: language
+      description: 언어
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

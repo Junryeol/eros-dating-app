@@ -1,0 +1,47 @@
+get:
+  summary: 설정 정보
+  description: 쿼리 파라미터 기본값 lastest
+  tags:
+    - config
+  parameters:
+    - in: query
+      name: version
+      description: 설정 버전
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/configs/config.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
+put:
+  summary: 설정 추가 및 업데이트 
+  description: 쿼리 파라미터 필수, 업데이트시 덮어쓰기 됨
+  tags:
+    - config
+  parameters:
+    - in: query
+      name: version
+      description: 약관 버전
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - datetime
+          properties:
+            datetime:
+              type: string
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

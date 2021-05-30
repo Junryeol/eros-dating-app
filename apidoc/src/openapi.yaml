@@ -1,0 +1,59 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Eros API
+  description: 에로스 데이팅 앱 API.
+servers:
+  - url: https://localhost/dev
+tags:
+  - name: account
+  - name: config`
+  - name: users
+  - name: files
+paths:
+  /login:
+    $ref: "./resources/account/login.yaml"
+  /logout:
+    $ref: "./resources/account/logout.yaml"
+  /token:
+    $ref: "./resources/account/token.yaml"
+  /me:
+    $ref: "./resources/account/me.yaml"
+  /auth:
+    $ref: "./resources/account/auth.yaml"
+  /find-email:
+    $ref: "./resources/account/findEmail.yaml"
+  /reset-password:
+    $ref: "./resources/account/resetPassword.yaml"
+
+  /config:
+    $ref: "./resources/configs/config.yaml"
+  /terms:
+    $ref: "./resources/terms/terms.yaml"
+
+  /users:
+    $ref: "./resources/users/users.yaml"
+  /users/{userId}:
+    $ref: "./resources/users/user.yaml"
+  /profiles/{userId}:
+    $ref: "./resources/users/profile.yaml"
+
+  /files:
+    $ref: "./resources/files/files.yaml"
+  /files/{fileId}:
+    $ref: "./resources/files/file.yaml"
+
+components:
+  parameters:
+    $ref: "./parameters/_index.yaml"
+  schemas:
+    $ref: "./schemas/_index.yaml"
+  responses:
+    $ref: "./responses/_index.yaml"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: [] 

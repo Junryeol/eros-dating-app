@@ -9,10 +9,13 @@ class Pickers {
   static basic(
       {BuildContext context,
       String labelText,
-      Icon icon,
+      Widget icon,
       String hintText,
       List<String> pickerdata,
       Function onConfirm}) {
+
+    //icon = Icon(icon.icon, color:Color(0xff706569),);
+
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),
@@ -27,16 +30,14 @@ class Pickers {
                 widget: Row(
                   children: <Widget>[
                     icon,
-                    Container(
-                        width: 120,
-                        child: Text(
-                          hintText,
-                          style: const TextStyle(
-                            color: const Color(0xff706569),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
-                        ))
+                    Text(
+                      hintText,
+                      style: const TextStyle(
+                        color: const Color(0xffd8d2d2),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    )
                   ],
                 ),
                 onPressed: () {
@@ -56,9 +57,10 @@ class Pickers {
   static date(
       {BuildContext context,
         String labelText,
-        Icon icon,
+        Widget icon,
         String hintText,
         Function onConfirm}) {
+
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),
@@ -73,16 +75,14 @@ class Pickers {
                 widget: Row(
                   children: <Widget>[
                     icon,
-                    Container(
-                        width: 120,
-                        child: Text(
-                          hintText,
-                          style: const TextStyle(
-                            color: const Color(0xff706569),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
-                        ))
+                    Text(
+                      hintText,
+                      style: const TextStyle(
+                        color: const Color(0xffd8d2d2),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    )
                   ],
                 ),
                 onPressed: () {
@@ -102,13 +102,14 @@ class Pickers {
   static number(
       {BuildContext context,
         String labelText,
-        Icon icon,
+        Widget icon,
         String hintText,
         Function onConfirm,
         int begin,
         int end,
         int jump
       }) {
+
     return Column(
       children: <Widget>[
         Labels.basic(context: context, labelText: labelText),
@@ -123,16 +124,14 @@ class Pickers {
                 widget: Row(
                   children: <Widget>[
                     icon,
-                    Container(
-                        width: 120,
-                        child: Text(
-                          hintText,
-                          style: const TextStyle(
-                            color: const Color(0xff706569),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
-                        ))
+                    Text(
+                      hintText,
+                      style: const TextStyle(
+                        color: const Color(0xffd8d2d2),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    )
                   ],
                 ),
                 onPressed: () {

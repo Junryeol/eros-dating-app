@@ -8,7 +8,7 @@ class TextFormFields {
       TextEditingController controller,
       String labelText,
       String hintText,
-      Widget prefixIcon,
+      Icon prefixIcon,
       Widget suffixIcon,
       bool obscureText = false,
       FocusNode focusNode,
@@ -16,7 +16,9 @@ class TextFormFields {
       Function validator,
       Function onChanged,
       Key key,
-      TextInputType keyboardType}) {
+      TextInputType keyboardType
+        , double height = 14.0, double width = double.infinity, double fontSize = 14.0, FontWeight fontWeight = FontWeight.w500
+      }) {
 
     return Form(
         key: key,
@@ -24,25 +26,48 @@ class TextFormFields {
         children: <Widget>[
           Labels.basic(
               context: context,
-              labelText: labelText
+              labelText: labelText,
+            height: height,
+            width: width,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
           ),
           TextFormField(
             cursorColor: Color(0xff3a3a3f),
             controller: controller,
             keyboardType: keyboardType,
             obscureText: obscureText,
-            validator: validator,
+            validator: (String value) {
+              var result = validator(value);
+              print(result);
+              if (result != null){
+                prefixIcon = Icon(prefixIcon.icon, color:Color(0xfff2708f),);
+              }
+              else {
+                prefixIcon = Icon(prefixIcon.icon);
+              }
+              return result;
+            },
             onChanged: onChanged,
             decoration: InputDecoration(
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               hintText: hintText,
+              hintStyle: TextStyle(color: Color(0xffd8d2d2)),
               alignLabelWithHint: true,
+              errorStyle: TextStyle(
+                color: Color(0xfff2708f)
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xfff2708f)),
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color(0xfff2708f), width: 2.0),
+              ),
             ),
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,
           ),
-          SizedBox(height: 12),
         ]
       ),
     );

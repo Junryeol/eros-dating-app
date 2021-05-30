@@ -1,0 +1,22 @@
+post:
+  summary: 사진 업로드
+  description: 사진 해상도 별로 리사이징 필요
+  tags:
+    - files
+  requestBody:
+    content:
+      image/png:
+        schema:
+          type: string
+          format: binary
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+    default:
+      $ref: "../../responses/error.yaml"

@@ -1,0 +1,30 @@
+get:
+  summary: 본인 인증 코드 발급
+  description: 미리 사용자 정보에 핸드폰이든 메일이든 등록하고 코드 보내도록 함
+  tags:
+    - account
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
+post:
+  summary: 본인 인증
+  description: 코드 통한 사용자 auth 값 변경 
+  tags:
+    - account
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - code
+          properties:
+            code:
+              type: string
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"

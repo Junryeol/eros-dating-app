@@ -1,0 +1,10 @@
+Error:
+  $ref: "./error.yaml"
+Success:
+  $ref: "./success.yaml"
+Token:
+  $ref: "./account/token.yaml"
+User:
+  $ref: "./users/user.yaml"
+Profile:
+  $ref: "./users/profile.yaml"

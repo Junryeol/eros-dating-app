@@ -1,0 +1,23 @@
+post:
+  summary: 계정 생성
+  description: 이메일와 비밀번호로 계정 생성 (이메일 중복 체크 기능 포함)
+  tags:
+    - users
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+  responses:
+    '200':
+      $ref: "../../responses/success.yaml"
+    default:
+      $ref: "../../responses/error.yaml"
