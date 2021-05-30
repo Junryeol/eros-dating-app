@@ -86,7 +86,6 @@ class SpiderChartPainter extends CustomPainter {
 
     paintGraphOutline(canvas, center, outerPoints);
 
-
     for (var j = 0; j < data.length; j++) {
       var dataPoints = <Offset>[];
 
