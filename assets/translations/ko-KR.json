@@ -143,6 +143,9 @@
   "request_before": "요청 확인 전",
   "request_after": "요청 확인 후",
   "add": "추가 하기",
+  "chatting": "대화하기",
+  "checking_like": "호감 확인 중",
+  "like": "좋아요",
   "tag": "태그",
   "tag_list": {
     "charming_point": [
