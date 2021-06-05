@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/i18n.dart';
+import 'package:eros/widgets/custom/spider_chart.dart';
 import 'package:flutter/material.dart';
 
 import 'package:eros/configs/skin.dart';
@@ -25,7 +28,6 @@ class ProfilePage extends StatelessWidget {
     Key key,
   }) : super(key: key);
   final String myID = "abc";
-  
 
   void showBlockDialog(BuildContext context) {
     showDialog(
@@ -82,6 +84,11 @@ class ProfilePage extends StatelessWidget {
       } 
     }
 
+    var values = [[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,1.0]];
+    var p_list = I18n.getList(context.locale, "tag_list.personality");
+    var d_list = I18n.getList(context.locale, "tag_list.dating_style");
+    var c_list = <Color>[Colors.red,Colors.green,Colors.blue,Colors.yellow,Colors.indigo,Colors.red,Colors.green,Colors.blue,Colors.yellow,Colors.indigo];
+
     List<Widget> contents = [
       Container(
         alignment: Alignment.centerLeft,
@@ -102,9 +109,8 @@ class ProfilePage extends StatelessWidget {
     ];
     List<Function> events = [
       () => showBlockDialog(context),
-      () => log("Reported $userName")
+      () => print("Reported $userName")
     ];
-
 
     return Scaffolds.scroll(
       context: context,
@@ -195,6 +201,34 @@ class ProfilePage extends StatelessWidget {
                       SizedBox(height: 8),
                       _buildInfoPair(Icon(Icons.liquor, size: 24.0, color: Skin.primary), userDrink),
                     ]
+                  )
+                ),
+                _buildInfoTitle(context, tr('personality')),
+                FutureBuilder(
+                  future: p_list,
+                  builder: (context, snapshot) => Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: SpiderChart(
+                      maxValue: 10,
+                      data: values, 
+                      colors: c_list, 
+                      labels: snapshot.data,
+                      size: Size(150, 150),
+                    )
+                  )
+                ),
+                _buildInfoTitle(context, tr('dating_style')),
+                FutureBuilder(
+                  future: d_list,
+                  builder: (context, snapshot) => Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: SpiderChart(
+                      maxValue: 10,
+                      data: values, 
+                      colors: c_list, 
+                      labels: snapshot.data,
+                      size: Size(150, 150),
+                    )
                   )
                 ),
                 _buildInfoTitle(context, tr('charming_point')),

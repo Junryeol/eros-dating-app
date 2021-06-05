@@ -81,7 +81,7 @@ class SpiderChartPainter extends CustomPainter {
     }
 
     if (this.labels != null) {
-      paintLabels(canvas, center, outerPoints, this.labels);
+      paintLabels(canvas, center, outerPoints, this.labels, size);
     }
 
     paintGraphOutline(canvas, center, outerPoints);
@@ -165,26 +165,28 @@ class SpiderChartPainter extends CustomPainter {
   }
 
   void paintLabels(
-      Canvas canvas, Offset center, List<Offset> points, List<String> labels) {
+      Canvas canvas, Offset center, List<Offset> points, List<String> labels, Size size) {
     var textPainter = TextPainter(textDirection: TextDirection.ltr);
     var textStyle =
-    TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.bold);
+    TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.bold, fontSize: size.width/40 + 7);
 
     for (var i = 0; i < points.length; i++) {
       textPainter.text = TextSpan(text: labels[i], style: textStyle);
       textPainter.layout();
-      if (points[i].dx < center.dx) {
-        textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width + 5.0), -10));
-      } else if (points[i].dx > center.dx) {
-        textPainter.paint(canvas, points[i].translate(5.0, -10));
-      } else if (points[i].dy < center.dy) {
-        textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width / 2), -20)); // top
+      var dx = points[i].dx, dy = points[i].dy;
+      var cx = center.dx, cy = center.dy;
+      var tx = 0.0, ty = 0.0;
+      if (dx < cx) {
+        tx -= (textPainter.size.width + 5.0);
+        ty -= textPainter.size.height / 2;
+      } else if (dx > cx) {
+        tx += 5.0;
+        ty -= textPainter.size.height / 2;
       } else {
-        textPainter.paint(
-            canvas, points[i].translate(-(textPainter.size.width / 2), 5)); // bottom
+        tx -= textPainter.size.width / 2;
+        ty = dy < cy ? -(textPainter.size.height + 5.0) : 5.0;
       }
+      textPainter.paint(canvas, points[i].translate(tx, ty));
     }
   }
 
