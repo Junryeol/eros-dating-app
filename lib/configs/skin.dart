@@ -20,7 +20,8 @@ class Skin {
   static ThemeData light() {
     var brightness = Brightness.light;
     var backgroundColor = white;
-    var primaryColor = grey;
+    var primaryColor = primary;
+    var textTheme = TextTheme(bodyText1: TextStyle(color: grey), button: TextStyle(color: grey), bodyText2: TextStyle(color: grey));
 
     return ThemeData(
       brightness: brightness,
@@ -29,6 +30,7 @@ class Skin {
       fontFamily: 'KoPubDotum',
       primaryColor: primaryColor,
       accentColor: primaryColor,
+      textTheme: textTheme
     );
   }
 

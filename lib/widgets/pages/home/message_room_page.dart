@@ -11,15 +11,17 @@ import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_fields.dart';
 import 'package:eros/widgets/components/texts.dart';
+import 'package:eros/widgets/items/chat_item.dart';
 import 'package:eros/widgets/pages/profile/image_crop_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MessageRoomPage extends StatefulWidget {
   MessageRoomPage({Key key, this.name, this.disconnect}) : super(key: key);
 
   final String name;
-  final Function disconnect;
+  final Function(BuildContext, Function) disconnect;
   String username = 'user1';
 
   @override
@@ -92,8 +94,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
         actions: [
           TextButton(
             onPressed: () {
-              widget.disconnect();
-              Navigator.of(context).pop();
+              widget.disconnect(context, () => Navigator.of(context).pop());
             },
             child: Text(tr('disconnect'), style: TextStyle(color: Skin.grey, fontSize: 12.0))
           )
@@ -134,67 +135,11 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
       crossAxisAlignment: isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         SizedBox(height: 6.0),
-        isMine ? buildRightBubble(text: chats[index].message, image: chats[index].image)
-        : buildLeftBubble(text: chats[index].message, image: chats[index].image, profile: 'assets/images/profile_test.png'),
+        ChatItem(isMine: isMine, chatData: chats[index]),
         isLast || !isUserSame || !isTimeSame ? timeWidget : Container()
       ],
     );
      
-  }
-
-  Widget buildLeftBubble({String text, String image, String profile}) {
-    var rad = Radius.circular(16);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        profile == null ? SizedBox(width: 30,) : Images.asset(
-          width: 30, height: 30,
-          borderRadius: 15,
-          path: profile
-        ),
-        SizedBox(width: 12),
-        Container(
-          padding: EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            color: Skin.bubbleLeft,
-            borderRadius: BorderRadius.only(topLeft: rad, topRight: rad, bottomRight: rad)
-          ),
-          child: image == null ? 
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 14.0,
-                height: 1.6,
-                letterSpacing: 0.67,
-                color: Skin.chatText
-              ),
-            ) : Image.memory(base64Decode(image), width: 150, height: 150)
-        )
-      ]
-    );
-  }
-
-  Widget buildRightBubble({String text, String image}) {
-    var rad = Radius.circular(16);
-    return Container(
-      padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Skin.bubbleRight,
-        borderRadius: BorderRadius.only(topLeft: rad, topRight: rad, bottomLeft: rad)
-      ),
-      child: image == null ? 
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 14.0,
-            height: 1.6,
-            letterSpacing: 0.67,
-            color: Skin.chatText
-          ),
-          textAlign: TextAlign.center,
-        ) : Image.memory(base64Decode(image), width: 150, height: 150),
-    );
   }
 
   Widget buildChatInputField() {
