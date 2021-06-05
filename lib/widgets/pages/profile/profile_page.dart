@@ -1,6 +1,11 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eros/configs/i18n.dart';
+import 'package:eros/widgets/custom/spider_chart.dart';
+import 'package:flutter/material.dart';
+
 import 'package:eros/configs/skin.dart';
 import 'package:eros/widgets/components/Images.dart';
 import 'package:eros/widgets/components/app_bars.dart';
@@ -9,7 +14,6 @@ import 'package:eros/widgets/components/chips.dart';
 import 'package:eros/widgets/components/dialogs.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/texts.dart';
-import 'package:flutter/material.dart';
 
 // 프로필 화면 생성 시 (라우트 생성 시) 전달할 아규먼트 클래스
 // TODO: API에 따라 달라질 예정
@@ -20,7 +24,10 @@ class ProfileArgument {
 }
 
 class ProfilePage extends StatelessWidget {
-  String myID = "abc";
+  const ProfilePage({
+    Key key,
+  }) : super(key: key);
+  final String myID = "abc";
 
   void showBlockDialog(BuildContext context) {
     showDialog(
@@ -77,6 +84,11 @@ class ProfilePage extends StatelessWidget {
       } 
     }
 
+    var values = [[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,1.0]];
+    var p_list = I18n.getList(context.locale, "tag_list.personality");
+    var d_list = I18n.getList(context.locale, "tag_list.dating_style");
+    var c_list = <Color>[Colors.red,Colors.green,Colors.blue,Colors.yellow,Colors.indigo,Colors.red,Colors.green,Colors.blue,Colors.yellow,Colors.indigo];
+
     List<Widget> contents = [
       Container(
         alignment: Alignment.centerLeft,
@@ -97,9 +109,8 @@ class ProfilePage extends StatelessWidget {
     ];
     List<Function> events = [
       () => showBlockDialog(context),
-      () => log("Reported $userName")
+      () => print("Reported $userName")
     ];
-
 
     return Scaffolds.scroll(
       context: context,
@@ -192,6 +203,34 @@ class ProfilePage extends StatelessWidget {
                     ]
                   )
                 ),
+                _buildInfoTitle(context, tr('personality')),
+                FutureBuilder(
+                  future: p_list,
+                  builder: (context, snapshot) => Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: SpiderChart(
+                      maxValue: 10,
+                      data: values, 
+                      colors: c_list, 
+                      labels: snapshot.data,
+                      size: Size(150, 150),
+                    )
+                  )
+                ),
+                _buildInfoTitle(context, tr('dating_style')),
+                FutureBuilder(
+                  future: d_list,
+                  builder: (context, snapshot) => Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: SpiderChart(
+                      maxValue: 10,
+                      data: values, 
+                      colors: c_list, 
+                      labels: snapshot.data,
+                      size: Size(150, 150),
+                    )
+                  )
+                ),
                 _buildInfoTitle(context, tr('charming_point')),
                 Chips.basic(
                   context: context,
@@ -244,6 +283,7 @@ class ProfilePage extends StatelessWidget {
             margin: EdgeInsets.only(top: badgeHeight),
             child: Buttons.primary(
               context: context,
+              active: text != tr('checking_like'),
               text: text,
               onPressed: onPress ?? () {},
               fontSize: 20.0

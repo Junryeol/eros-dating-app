@@ -11,16 +11,24 @@ import 'package:eros/widgets/components/app_bars.dart';
 import 'package:eros/widgets/components/scaffolds.dart';
 import 'package:eros/widgets/components/text_fields.dart';
 import 'package:eros/widgets/components/texts.dart';
+import 'package:eros/widgets/items/chat_item.dart';
 import 'package:eros/widgets/pages/profile/image_crop_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MessageRoomPage extends StatefulWidget {
-  MessageRoomPage({Key key, this.name, this.disconnect}) : super(key: key);
+  MessageRoomPage({
+    Key key, 
+    this.name, 
+    this.isConnected, 
+    this.disconnect,
+    this.delete
+  }) : super(key: key);
 
   final String name;
-  final Function disconnect;
-  String username = 'user1';
+  final bool isConnected;
+  final Function(BuildContext, Function) disconnect, delete;
+  final String username = 'user1';
 
   @override
   _MessageRoomPageState createState() => _MessageRoomPageState();
@@ -89,15 +97,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
         context: context,
         title: widget.name,
         fontSize: 16.0,
-        actions: [
-          TextButton(
-            onPressed: () {
-              widget.disconnect();
-              Navigator.of(context).pop();
-            },
-            child: Text(tr('disconnect'), style: TextStyle(color: Skin.grey, fontSize: 12.0))
-          )
-        ]
+        actions: [ buildOptionAction() ]
       ),
       body: Column(
         children: [
@@ -114,6 +114,43 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
           buildChatInputField()
         ]
       ),
+    );
+  }
+
+  Widget buildOptionAction() {
+    return PopupMenuButton<int>(
+      icon: Icon(Icons.more_vert, color: Skin.grey),
+      onSelected: (value) {
+        switch (value) {
+          case 0: // 연결 해제
+            widget.disconnect(context, () => Navigator.of(context).pop());
+            break;
+          case 1: // 신고
+            break;
+          case 2: // 삭제
+            widget.delete(context, () => Navigator.of(context).pop());
+            break;
+          default: break;
+        }
+      },
+      itemBuilder: (context) => widget.isConnected ? <PopupMenuEntry<int>>[
+        PopupMenuItem<int>(
+          value: 0,
+          child: Text(tr('disconnect')),
+          textStyle: TextStyle(color: Skin.grey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        ),
+        PopupMenuItem<int>(
+          value: 1,
+          child: Text(tr('report')),
+          textStyle: TextStyle(color: Skin.lightgrey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        )
+      ] : <PopupMenuEntry<int>>[
+        PopupMenuItem<int>(
+          value: 2,
+          child: Text(tr('delete')),
+          textStyle: TextStyle(color: Skin.grey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        )
+      ]
     );
   }
 
@@ -134,67 +171,11 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
       crossAxisAlignment: isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         SizedBox(height: 6.0),
-        isMine ? buildRightBubble(text: chats[index].message, image: chats[index].image)
-        : buildLeftBubble(text: chats[index].message, image: chats[index].image, profile: 'assets/images/profile_test.png'),
+        ChatItem(isMine: isMine, chatData: chats[index]),
         isLast || !isUserSame || !isTimeSame ? timeWidget : Container()
       ],
     );
      
-  }
-
-  Widget buildLeftBubble({String text, String image, String profile}) {
-    var rad = Radius.circular(16);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        profile == null ? SizedBox(width: 30,) : Images.asset(
-          width: 30, height: 30,
-          borderRadius: 15,
-          path: profile
-        ),
-        SizedBox(width: 12),
-        Container(
-          padding: EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            color: Skin.bubbleLeft,
-            borderRadius: BorderRadius.only(topLeft: rad, topRight: rad, bottomRight: rad)
-          ),
-          child: image == null ? 
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 14.0,
-                height: 1.6,
-                letterSpacing: 0.67,
-                color: Skin.chatText
-              ),
-            ) : Image.memory(base64Decode(image), width: 150, height: 150)
-        )
-      ]
-    );
-  }
-
-  Widget buildRightBubble({String text, String image}) {
-    var rad = Radius.circular(16);
-    return Container(
-      padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Skin.bubbleRight,
-        borderRadius: BorderRadius.only(topLeft: rad, topRight: rad, bottomLeft: rad)
-      ),
-      child: image == null ? 
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 14.0,
-            height: 1.6,
-            letterSpacing: 0.67,
-            color: Skin.chatText
-          ),
-          textAlign: TextAlign.center,
-        ) : Image.memory(base64Decode(image), width: 150, height: 150),
-    );
   }
 
   Widget buildChatInputField() {
@@ -210,12 +191,13 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: TextField(
+          enabled: widget.isConnected,
           controller: controller,
           decoration: InputDecoration(
             filled: true,
             fillColor: Skin.white,
             hoverColor: Skin.white,
-            focusedBorder: border, enabledBorder: border,
+            focusedBorder: border, enabledBorder: border, disabledBorder: border,
             contentPadding: const EdgeInsets.symmetric(vertical: 9),
             prefixIcon: InkWell(
               child: Icon(Icons.add, size: 20, color: Skin.grey),
@@ -225,6 +207,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
               child: Icon(Icons.send, size: 20, color: Skin.grey),
               onTap: () => addChat(controller.text)
             ),
+            hintText: widget.isConnected ? "" : tr("disconnected_message")
           ),
           onSubmitted: (text) => addChat(text),
           style: TextStyle(

@@ -9,6 +9,8 @@ import 'package:eros/widgets/components/texts.dart';
 import 'package:eros/widgets/items/message_room_item.dart';
 import 'package:eros/widgets/pages/home/message_room_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_pickers/flutter_material_pickers.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 
 class MessagePage extends StatefulWidget {
   MessagePage({Key key}) : super(key: key);
@@ -20,6 +22,13 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
 
   List<Map<String, dynamic>> roomList;
+
+  final List<String> disconnectReasons = [
+    tr('disconnect_reason_1'),
+    tr('disconnect_reason_2'),
+    tr('disconnect_reason_3'),
+  ];
+  String selectedReason = tr('disconnect_reason_2');
 
   @override
   void initState() {
@@ -45,8 +54,27 @@ class _MessagePageState extends State<MessagePage> {
     setState((){ roomList = List.from(roomList)..removeAt(index); });
   }
 
-  void disconnectChatRoom(int index) {
-    setState((){ roomList[index]['connected'] = false; });
+  void disconnectChatRoom({@required BuildContext context, @required int index, Function onConfirm}) {
+    showMaterialScrollPicker(
+      context: context, 
+      title: tr("disconnect"),
+      headerTextColor: Skin.grey,
+      headerColor: Skin.white,
+      maxLongSide: 300,
+      showDivider: false,
+      items: disconnectReasons,
+      selectedValue: selectedReason,
+      buttonTextColor: Skin.primary,
+      confirmText: tr('confirm'),
+      cancelText: tr('cancel'),
+      onChanged: (reason) => setState(() => selectedReason = reason),
+      onConfirmed: () {
+        log('Disconnect due to $selectedReason');
+        setState((){ roomList[index]['connected'] = false; });
+        onConfirm ??= (){};
+        onConfirm();
+      },
+    );
   }
 
   Function onPressRoom(int index) {
@@ -57,7 +85,9 @@ class _MessagePageState extends State<MessagePage> {
         MaterialPageRoute(
           builder: (context) => MessageRoomPage(
             name: roomList[index]['name'],
-            disconnect: () => disconnectChatRoom(index)
+            isConnected: roomList[index]['connected'],
+            disconnect: (context, onConfirm) => disconnectChatRoom(context: context, index: index, onConfirm: onConfirm),
+            delete: (context, onDelete) { deleteChatRoom(index); onDelete(); }
           )
         )
       ); 
@@ -93,7 +123,7 @@ class _MessagePageState extends State<MessagePage> {
       )
     ];
     List<Function> events = roomList[index]['connected'] ? [
-      () => disconnectChatRoom(index),
+      () => disconnectChatRoom(context: context, index:index),
       () => log("Reported ${roomList[index]['name']}")
     ] : [ 
       () => deleteChatRoom(index)

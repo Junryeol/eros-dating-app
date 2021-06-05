@@ -133,6 +133,9 @@
   "empty_message_guide": "진행 중인 대화가 없어요\n마음에 드는 이성에게 마음을 표현해보세요",
   "disconnected_message": "연결이 해제되었습니다.",
   "disconnect": "연결 해제",
+  "disconnect_reason_1": "취향이 아님",
+  "disconnect_reason_2": "무성의한 답변",
+  "disconnect_reason_3": "부적절한 메세지",
   "report": "신고",
   "delete": "삭제",
   "block": "차단",
@@ -201,6 +204,30 @@
       "selfie",
       "summer",
       "instadaily"
+    ],
+    "personality": [
+      "다정한",
+      "긍정적인",
+      "성실한",
+      "사차원적인",
+      "현실적인",
+      "개방적인",
+      "감성적인",
+      "솔직한",
+      "적극적인",
+      "사교적인"
+    ],
+    "dating_style": [
+      "결혼 고려",
+      "이성 관계",
+      "사생활",
+      "스킨십",
+      "애정표현",
+      "연락 빈도",
+      "만남 횟수",
+      "연애 우선",
+      "조건 중시",
+      "과거 이력"
     ]
   }
 }
