@@ -14,15 +14,21 @@ import 'package:eros/widgets/components/texts.dart';
 import 'package:eros/widgets/items/chat_item.dart';
 import 'package:eros/widgets/pages/profile/image_crop_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MessageRoomPage extends StatefulWidget {
-  MessageRoomPage({Key key, this.name, this.disconnect}) : super(key: key);
+  MessageRoomPage({
+    Key key, 
+    this.name, 
+    this.isConnected, 
+    this.disconnect,
+    this.delete
+  }) : super(key: key);
 
   final String name;
-  final Function(BuildContext, Function) disconnect;
-  String username = 'user1';
+  final bool isConnected;
+  final Function(BuildContext, Function) disconnect, delete;
+  final String username = 'user1';
 
   @override
   _MessageRoomPageState createState() => _MessageRoomPageState();
@@ -91,14 +97,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
         context: context,
         title: widget.name,
         fontSize: 16.0,
-        actions: [
-          TextButton(
-            onPressed: () {
-              widget.disconnect(context, () => Navigator.of(context).pop());
-            },
-            child: Text(tr('disconnect'), style: TextStyle(color: Skin.grey, fontSize: 12.0))
-          )
-        ]
+        actions: [ buildOptionAction() ]
       ),
       body: Column(
         children: [
@@ -115,6 +114,43 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
           buildChatInputField()
         ]
       ),
+    );
+  }
+
+  Widget buildOptionAction() {
+    return PopupMenuButton<int>(
+      icon: Icon(Icons.more_vert, color: Skin.grey),
+      onSelected: (value) {
+        switch (value) {
+          case 0: // 연결 해제
+            widget.disconnect(context, () => Navigator.of(context).pop());
+            break;
+          case 1: // 신고
+            break;
+          case 2: // 삭제
+            widget.delete(context, () => Navigator.of(context).pop());
+            break;
+          default: break;
+        }
+      },
+      itemBuilder: (context) => widget.isConnected ? <PopupMenuEntry<int>>[
+        PopupMenuItem<int>(
+          value: 0,
+          child: Text(tr('disconnect')),
+          textStyle: TextStyle(color: Skin.grey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        ),
+        PopupMenuItem<int>(
+          value: 1,
+          child: Text(tr('report')),
+          textStyle: TextStyle(color: Skin.lightgrey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        )
+      ] : <PopupMenuEntry<int>>[
+        PopupMenuItem<int>(
+          value: 2,
+          child: Text(tr('delete')),
+          textStyle: TextStyle(color: Skin.grey, fontSize: 16.0, fontWeight: FontWeight.w700),
+        )
+      ]
     );
   }
 
@@ -155,12 +191,13 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: TextField(
+          enabled: widget.isConnected,
           controller: controller,
           decoration: InputDecoration(
             filled: true,
             fillColor: Skin.white,
             hoverColor: Skin.white,
-            focusedBorder: border, enabledBorder: border,
+            focusedBorder: border, enabledBorder: border, disabledBorder: border,
             contentPadding: const EdgeInsets.symmetric(vertical: 9),
             prefixIcon: InkWell(
               child: Icon(Icons.add, size: 20, color: Skin.grey),
@@ -170,6 +207,7 @@ class _MessageRoomPageState extends State<MessageRoomPage> {
               child: Icon(Icons.send, size: 20, color: Skin.grey),
               onTap: () => addChat(controller.text)
             ),
+            hintText: widget.isConnected ? "" : tr("disconnected_message")
           ),
           onSubmitted: (text) => addChat(text),
           style: TextStyle(

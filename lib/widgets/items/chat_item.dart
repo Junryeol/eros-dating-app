@@ -14,22 +14,23 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isMine ? 
-      buildRightBubble(text: chatData.message, image: chatData.image)
-      : buildLeftBubble(text: chatData.message, image: chatData.image, profile: 'assets/images/profile_test.png');
+      buildRightBubble(context: context, text: chatData.message, image: chatData.image)
+      : buildLeftBubble(context: context, text: chatData.message, image: chatData.image, profile: 'assets/images/profile_test.png');
   }
-}
 
-
-Widget buildLeftBubble({String text, String image, String profile}) {
+  Widget buildLeftBubble({BuildContext context, String text, String image, String profile}) {
     var rad = Radius.circular(16);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        profile == null ? SizedBox(width: 30,) : Images.asset(
-          width: 30, height: 30,
-          borderRadius: 15,
-          path: profile
+        InkWell(
+          child: Images.asset(
+            width: 30, height: 30,
+            borderRadius: 15,
+            path: profile
+          ),
+          onTap: () => Navigator.of(context).pushNamed('/profile'),
         ),
         SizedBox(width: 12),
         Container(
@@ -53,7 +54,7 @@ Widget buildLeftBubble({String text, String image, String profile}) {
     );
   }
 
-  Widget buildRightBubble({String text, String image}) {
+  Widget buildRightBubble({BuildContext context, String text, String image}) {
     var rad = Radius.circular(16);
     return Container(
       padding: EdgeInsets.all(12.0),
@@ -74,3 +75,6 @@ Widget buildLeftBubble({String text, String image, String profile}) {
         ) : Image.memory(base64Decode(image), width: 150, height: 150),
     );
   }
+}
+
+

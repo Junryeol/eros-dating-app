@@ -85,7 +85,9 @@ class _MessagePageState extends State<MessagePage> {
         MaterialPageRoute(
           builder: (context) => MessageRoomPage(
             name: roomList[index]['name'],
-            disconnect: (context, onConfirm) => disconnectChatRoom(context: context, index: index, onConfirm: onConfirm)
+            isConnected: roomList[index]['connected'],
+            disconnect: (context, onConfirm) => disconnectChatRoom(context: context, index: index, onConfirm: onConfirm),
+            delete: (context, onDelete) { deleteChatRoom(index); onDelete(); }
           )
         )
       ); 
