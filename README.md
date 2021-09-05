@@ -45,7 +45,7 @@
 ### 6. 스타일 가이드
 * 개발 편의를 위해 기본적인 스타일을 지정
 
-![style](./readme/style.png)
+<!-- ![style](./readme/style.png) -->
 
 ### 7. 확장성을 위해 개발에 고려한 점
 * android, ios 크로스 플랫폼 (Flutter 사용)
@@ -71,7 +71,7 @@ source
 └── pubspec.yaml
 ```
 
-### 8. 페이지 구성
+### 8. 페이지 구성 [[흐름도](./readme/flow.pdf)]
 * 로그인 페이지
 * 계정/비밀번호 찾기 페이지
 * 계정 생성 페이지
@@ -101,5 +101,3 @@ source
 | | | | | |
 |:-:|:-:|:-:|:-:|:-:|
 |![auth](./readme/auth.png)|![cash](./readme/cash.png)|![first](./readme/first.png)|![call](./readme/call.png)|![play](./readme/play.png)|
-
-### 느낀 점
